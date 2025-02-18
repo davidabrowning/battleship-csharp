@@ -16,6 +16,28 @@ namespace BattleshipCSharp
         {
             Console.WriteLine($"[Failure] {title} | Expected: {expected.ToString()} | Actual: {actual.ToString()}");
         }
+        public static void AssertTrue(string title, bool actual)
+        {
+            if (actual)
+            {
+                PrintSuccess(title);
+            }
+            else
+            {
+                PrintFailure(title, true, actual);
+            }
+        }
+        public static void AssertFalse(string title, bool actual)
+        {
+            if (actual)
+            {
+                PrintFailure(title, false, actual);
+            }
+            else
+            {
+                PrintSuccess(title);
+            }
+        }
         public static void AssertEquals(string title, object expected, object actual)
         {
             if (expected.Equals(actual))
