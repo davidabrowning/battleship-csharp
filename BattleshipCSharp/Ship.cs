@@ -37,12 +37,53 @@ namespace BattleshipCSharp
         }
         public void PlaceRandomly(Board board)
         {
+            bool shipLocationsAreAllValid = false;
             Random random = new Random();
-            int xstart = random.Next(0, 100);
-            for(int i = 0; i < Length; i++)
+
+            while (shipLocationsAreAllValid == false)
             {
-                Locations.Add(new Location(xstart + i, 0));
+                Locations.Clear();
+
+                // Choose ship orientation
+                ShipOrientation orientation = (ShipOrientation)random.Next(0, 2);
+
+                // Choose ship origin
+                int xstart = random.Next(board.XMin, board.XMax + 1);
+                int ystart = random.Next(board.YMin, board.YMax + 1);
+
+                switch (orientation)
+                {
+                    case ShipOrientation.Horizontal:
+                        for (int i = 0; i < Length; i++)
+                        {
+                            Locations.Add(new Location(xstart + i, ystart));
+                        }
+                        break;
+                    case ShipOrientation.Vertical:
+                        for (int i = 0; i < Length; i++)
+                        {
+                            Locations.Add(new Location(xstart, ystart + i));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                // Check if ship locations are valid
+                shipLocationsAreAllValid = AllLocationsAreValid(board);
             }
+        }
+
+        private bool AllLocationsAreValid(Board board)
+        {
+            foreach (Location location in Locations)
+            {
+                if (!board.IsEmpty(location))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

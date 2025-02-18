@@ -14,6 +14,8 @@ namespace BattleshipCSharp
             RunLocationTests();
             Console.WriteLine("Running Ship tests");
             RunShipTests();
+            Console.WriteLine("Running Board tests");
+            RunBoardTests();
         }
 
         public void RunLocationTests()
@@ -80,7 +82,7 @@ namespace BattleshipCSharp
             title = "Ship is not always placed at the same location";
             bool shipAlwaysPlacedAtSameLocation = true;
             location = null;
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 ship = new Ship("Battleship", ShipLength.Battleship);
                 board = new Board();
@@ -99,12 +101,70 @@ namespace BattleshipCSharp
             TestHelper.AssertFalse(title, shipAlwaysPlacedAtSameLocation);
 
             title = "Ship is not always placed horizontally";
+            bool shipAlwaysHorizontal = true;
+            for (int i = 0; i < 10; i++)
+            {
+                ship = new Ship("Battleship", ShipLength.Battleship);
+                board = new Board();
+                ship.PlaceRandomly(board);
+                if (ship.Locations[0].YPos != ship.Locations[1].YPos)
+                {
+                    shipAlwaysHorizontal = false;
+                }
+            }
+            TestHelper.AssertFalse(title, shipAlwaysHorizontal);
 
             title = "Ship is not always placed vertically";
+            bool shipAlwaysVertical = true;
+            for (int i = 0; i < 10; i++)
+            {
+                ship = new Ship("Battleship", ShipLength.Battleship);
+                board = new Board();
+                ship.PlaceRandomly(board);
+                if (ship.Locations[0].XPos != ship.Locations[1].XPos)
+                {
+                    shipAlwaysVertical = false;
+                }
+            }
+            TestHelper.AssertFalse(title, shipAlwaysVertical);
 
             title = "Ship is not placed outside of game board";
+            bool shipPlacedOutsideOfGameBoard = false;
+            for (int i = 0; i < 100; i++)
+            {
+                ship = new Ship("Carrier", ShipLength.Carrier);
+                board = new Board();
+                ship.PlaceRandomly(board);
+                foreach (Location loc in ship.Locations)
+                {
+                    if (loc.XPos < 0 || loc.XPos >= board.Width
+                        || loc.YPos < 0 || loc.YPos >= board.Height)
+                    {
+                        shipPlacedOutsideOfGameBoard = true;
+                    }
+                }
+            }
+            TestHelper.AssertFalse(title, shipPlacedOutsideOfGameBoard);
 
             title = "Ship is not placed on top of other ships";
+        }
+
+        private void RunBoardTests()
+        {
+            // Variables
+            string title;
+            Board board;
+            Location location;
+
+            title = "IsEmpty returns false when location is off of board";
+            board = new Board();
+            location = new Location(0, board.Height);
+            TestHelper.AssertFalse(title, board.IsEmpty(location));
+
+            title = "IsEmpty initially returns true for origin";
+            board = new Board();
+            location = new Location(0, 0);
+            TestHelper.AssertTrue(title, board.IsEmpty(location));
         }
     }
 }

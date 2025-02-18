@@ -10,11 +10,17 @@ namespace BattleshipCSharp
     {
         private static void PrintSuccess(string title)
         {
-            Console.WriteLine($"[Success] {title}");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("   [Success] ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(title);
         }
         private static void PrintFailure(string title, object expected, object actual)
         {
-            Console.WriteLine($"[Failure] {title} | Expected: {expected.ToString()} | Actual: {actual.ToString()}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("   [Failure] ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"{title} | Expected: {expected.ToString()} | Actual: {actual.ToString()}");
         }
         public static void AssertTrue(string title, bool actual)
         {
