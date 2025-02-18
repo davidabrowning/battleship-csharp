@@ -21,28 +21,29 @@ namespace BattleshipCSharp
         }
         public bool IsSunk()
         {
-            return false;
+            return Locations.Count == Hits.Count;
         }
         public bool IsHit(Location location)
         {
-            return false;
+            return Hits.Contains(location);
         }
         public bool Contains(Location location)
         {
-            return false;
+            return Locations.Contains(location);
         }
         public void ProcessHit(Location location)
         {
-            Console.WriteLine("Ship.ProcessHit() not yet implemented.");
+            Hits.Add(location);
         }
         public void PlaceRandomly(Board board)
         {
-            bool shipLocationsAreAllValid = false;
+            List<Location> potentialLocations = new List<Location>();
+            bool potentialLocationsAreEmpty = false;
             Random random = new Random();
 
-            while (shipLocationsAreAllValid == false)
+            while (potentialLocationsAreEmpty == false)
             {
-                Locations.Clear();
+                potentialLocations.Clear();
 
                 // Choose ship orientation
                 ShipOrientation orientation = (ShipOrientation)random.Next(0, 2);
@@ -56,13 +57,13 @@ namespace BattleshipCSharp
                     case ShipOrientation.Horizontal:
                         for (int i = 0; i < Length; i++)
                         {
-                            Locations.Add(new Location(xstart + i, ystart));
+                            potentialLocations.Add(new Location(xstart + i, ystart));
                         }
                         break;
                     case ShipOrientation.Vertical:
                         for (int i = 0; i < Length; i++)
                         {
-                            Locations.Add(new Location(xstart, ystart + i));
+                            potentialLocations.Add(new Location(xstart, ystart + i));
                         }
                         break;
                     default:
@@ -70,20 +71,10 @@ namespace BattleshipCSharp
                 }
 
                 // Check if ship locations are valid
-                shipLocationsAreAllValid = AllLocationsAreValid(board);
+                potentialLocationsAreEmpty = board.IsEmpty(potentialLocations);
             }
-        }
 
-        private bool AllLocationsAreValid(Board board)
-        {
-            foreach (Location location in Locations)
-            {
-                if (!board.IsEmpty(location))
-                {
-                    return false;
-                }
-            }
-            return true;
+            Locations = potentialLocations;
         }
     }
 }

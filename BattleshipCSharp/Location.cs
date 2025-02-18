@@ -32,6 +32,10 @@ namespace BattleshipCSharp
             }
             return true;
         }
+        public override string ToString()
+        {
+            return $"({XPos}, {YPos})";
+        }
 
     }
 }

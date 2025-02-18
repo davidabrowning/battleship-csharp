@@ -157,8 +157,44 @@ namespace BattleshipCSharp
                 board.Fleet.Add(new Ship("Carrier", ShipLength.Carrier));
                 board.Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
                 board.Fleet.PlaceRandomly(board);
+                foreach (Location ship0Location in board.Fleet.Ships[0].Locations)
+                {
+                    if (board.Fleet.Ships[1].Contains(ship0Location))
+                    {
+                        shipsOverlap = true;
+                    }
+                }
             }
-            TestHelper.AssertTrue(title, false);
+            TestHelper.AssertFalse(title, shipsOverlap);
+
+            title = "Ship contains hit after being hit";
+            ship = new Ship("Carrier", ShipLength.Carrier);
+            board = new Board();
+            ship.PlaceRandomly(board);
+            location = ship.Locations[2];
+            ship.ProcessHit(location);
+            TestHelper.AssertTrue(title, ship.IsHit(location));
+
+            title = "Ship is not sunk after being hit at some locations";
+            ship = new Ship("Carrier", ShipLength.Carrier);
+            ship.PlaceRandomly(new Board());
+            for (int i = 2; i < ship.Length; i++)
+            {
+                location = ship.Locations[i];
+                ship.ProcessHit(location);
+            }
+            TestHelper.AssertFalse(title, ship.IsSunk());
+
+            title = "Ship is sunk after being hit at all locations";
+            ship = new Ship("Carrier", ShipLength.Carrier);
+            ship.PlaceRandomly(new Board());
+            for (int i = 0; i < ship.Length; i++)
+            {
+                location = ship.Locations[i];
+                ship.ProcessHit(location);
+            }
+            TestHelper.AssertTrue(title, ship.IsSunk());
+
         }
 
         private void RunFleetTests()
@@ -207,6 +243,12 @@ namespace BattleshipCSharp
             board = new Board();
             location = new Location(0, 0);
             TestHelper.AssertTrue(title, board.IsEmpty(location));
+
+            title = "IsEmpty returns false if ship is present at location";
+            board = new Board();
+            board.Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
+            board.Fleet.PlaceRandomly(board);
+            TestHelper.AssertFalse(title, board.IsEmpty(board.Fleet.Ships[0].Locations[0]));
         }
     }
 }
