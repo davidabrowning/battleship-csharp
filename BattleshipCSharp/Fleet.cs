@@ -16,7 +16,7 @@ namespace BattleshipCSharp
         }
         public void Add(Ship ship)
         {
-            Console.WriteLine("Fleet.Add() not yet implemented.");
+            Ships.Add(ship);
         }
         public bool IsSunk()
         {
@@ -36,7 +36,10 @@ namespace BattleshipCSharp
         }
         public void PlaceRandomly(Board board)
         {
-            Console.WriteLine("Fleet.PlaceRandomly() not yet implemented.");
+            foreach (Ship ship in Ships)
+            {
+                ship.PlaceRandomly(board);
+            }
         }
     }
 }

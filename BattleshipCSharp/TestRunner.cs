@@ -60,6 +60,7 @@ namespace BattleshipCSharp
             // Variables
             string title;
             Ship ship;
+            Fleet fleet;
             Board board;
             Location location;
 
@@ -149,6 +150,14 @@ namespace BattleshipCSharp
             TestHelper.AssertFalse(title, shipPlacedOutsideOfGameBoard);
 
             title = "Ship is not placed on top of other ships";
+            bool shipsOverlap = false;
+            for (int i = 0; i < 100; i++)
+            {
+                board = new Board();
+                board.Fleet.Add(new Ship("Carrier", ShipLength.Carrier));
+                board.Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
+                board.Fleet.PlaceRandomly(board);
+            }
             TestHelper.AssertTrue(title, false);
         }
 
@@ -159,10 +168,27 @@ namespace BattleshipCSharp
             Ship ship;
             Ship ship2;
             Fleet fleet;
+            Board board;
 
             title = "Fleet size is initially 0";
             fleet = new Fleet();
             TestHelper.AssertEquals(title, 0, fleet.Size);
+
+            title = "Fleet size is 2 after adding 2 ships";
+            fleet = new Fleet();
+            ship = new Ship("Destroyer", ShipLength.Destroyer);
+            ship2 = new Ship("Submarine", ShipLength.Submarine);
+            fleet.Add(ship);
+            fleet.Add(ship2);
+            TestHelper.AssertEquals(title, 2, fleet.Size);
+
+            title = "PlaceRandomly places ships";
+            board = new Board();
+            fleet = new Fleet();
+            fleet.Add(new Ship("Destroyer", ShipLength.Destroyer));
+            fleet.Add(new Ship("Submarine", ShipLength.Submarine));
+            fleet.PlaceRandomly(board);
+            TestHelper.AssertNotEquals(title, 0, fleet.Ships[0].Locations.Count);
         }
 
         private void RunBoardTests()
