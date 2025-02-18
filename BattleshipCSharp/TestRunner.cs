@@ -14,6 +14,8 @@ namespace BattleshipCSharp
             RunLocationTests();
             Console.WriteLine("Running Ship tests");
             RunShipTests();
+            Console.WriteLine("Running Fleet tests");
+            RunFleetTests();
             Console.WriteLine("Running Board tests");
             RunBoardTests();
         }
@@ -147,6 +149,20 @@ namespace BattleshipCSharp
             TestHelper.AssertFalse(title, shipPlacedOutsideOfGameBoard);
 
             title = "Ship is not placed on top of other ships";
+            TestHelper.AssertTrue(title, false);
+        }
+
+        private void RunFleetTests()
+        {
+            // Variables
+            string title;
+            Ship ship;
+            Ship ship2;
+            Fleet fleet;
+
+            title = "Fleet size is initially 0";
+            fleet = new Fleet();
+            TestHelper.AssertEquals(title, 0, fleet.Size);
         }
 
         private void RunBoardTests()
