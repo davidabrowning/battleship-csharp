@@ -4,13 +4,14 @@
     {
         public static void Main(string[] args)
         {
-            //RunProgram();
-            RunTests();
+            RunProgram();
+            //RunTests();
         }
 
         private static void RunProgram()
         {
-            Console.WriteLine("Running program...");
+            Game game = new Game();
+            game.Go();
         }
 
         private static void RunTests()
