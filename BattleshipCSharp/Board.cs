@@ -22,9 +22,22 @@ namespace BattleshipCSharp
             Attempts = new List<Location>();
             Height = 10;
             Width = 10;
+
+            Fleet.Add(new Ship("Carrier", ShipLength.Carrier));
+            Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
+            Fleet.Add(new Ship("Cruiser", ShipLength.Cruiser));
+            Fleet.Add(new Ship("Submarine", ShipLength.Submarine));
+            Fleet.Add(new Ship("Destroyer", ShipLength.Destroyer));
+            Fleet.PlaceRandomly(this);
         }
         public void ProcessAttempt(Location location)
         {
+            if (!IsOnBoard(location))
+            {
+                Console.WriteLine("Not on board.");
+                return;
+            }
+
             if (Attempts.Contains(location))
             {
                 Console.WriteLine("Already attempted.");
@@ -37,10 +50,18 @@ namespace BattleshipCSharp
                 Fleet.ProcessHit(location);
             }
         }
+        public bool IsOnBoard(Location location)
+        {
+            if (XMin <= location.XPos && location.XPos <= XMax
+                && YMin <= location.YPos && location.YPos <= YMax)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool IsEmpty(Location location)
         {
-            if (location.XPos < XMin || location.XPos > XMax
-                || location.YPos < YMin || location.YPos > YMax)
+            if (!IsOnBoard(location))
             {
                 return false;
             }

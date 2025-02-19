@@ -30,6 +30,17 @@ namespace BattleshipCSharp
             }
             return true;
         }
+        public bool IsSunk(Location location)
+        {
+            foreach (Ship ship in Ships)
+            {
+                if (ship.IsHit(location) && ship.IsSunk())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool IsHit(Location location)
         {
             foreach (Ship ship in Ships)
