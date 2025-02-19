@@ -18,36 +18,49 @@ namespace BattleshipCSharp
             BoardPrinter.Print(board);
             while (board.Fleet.IsSunk() == false)
             {
-                TextPrinter.PrintPrompt($"\n{board.Attempts.Count} attempts | Choose a location: ");
-                string userInput = Console.ReadLine().ToUpper().Trim();
+                NextTurn();
+            }
+        }
+        private void NextTurn()
+        {
+            Location location = AskUserForLocation();
+            if (location == null)
+            {
+                return;
+            }
+            board.ProcessAttempt(location);
+            Console.Clear();
+            BoardPrinter.Print(board);
+        }
 
-                if (userInput.Length < 2)
-                {
-                    TextPrinter.PrintWarning("Too short");
-                    continue;
-                }
-
+        private Location? AskUserForLocation()
+        {
+            TextPrinter.PrintPrompt($"\n{board.Attempts.Count} attempts | Choose a location: ");
+            string userInput = Console.ReadLine().ToUpper().Trim();
+            if (userInput == "Q")
+            {
+                QuitGame();
+                return null;
+            }
+            try
+            {
                 string row = userInput.Substring(0, 1);
                 string col = userInput.Substring(1);
-
-                int x = -1;
-                int y = -1;
-
-                try
-                {
-                    x = int.Parse(col);
-                    y = (int)Convert.ToChar(row) - 65;
-                }
-                catch (Exception ex)
-                {
-                    TextPrinter.PrintWarning("Invalid input.");
-                    continue;
-                }
-
-                board.ProcessAttempt(new Location(x, y));
-                Console.Clear();
-                BoardPrinter.Print(board);
+                int x = int.Parse(col);
+                int y = (int)Convert.ToChar(row) - 65;
+                return new Location(x, y);
             }
+            catch (Exception ex)
+            {
+                TextPrinter.PrintWarning("Invalid input.");
+                return null;
+            }
+        }
+
+        private void QuitGame()
+        {
+            TextPrinter.PrintWarning("Game over.");
+            Environment.Exit(0);
         }
     }
 }

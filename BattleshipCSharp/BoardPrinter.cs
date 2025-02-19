@@ -11,15 +11,15 @@ namespace BattleshipCSharp
     {
         public static void Print(Board board)
         {
-            TextPrinter.PrintTile(" ");
+            TextPrinter.PrintHeaderTile(" ");
             for (int x = board.XMin; x <= board.XMax; x++)
             {
-                TextPrinter.PrintTile(x.ToString());
+                TextPrinter.PrintHeaderTile(x.ToString());
             }
             Console.WriteLine();
             for (int y = board.YMin; y <= board.YMax; y++)
             {
-                TextPrinter.PrintTile($"{(char)(65 + y)}");
+                TextPrinter.PrintHeaderTile($"{(char)(65 + y)}");
                 for (int x = board.XMin; x <= board.XMax; x++)
                 {
                     Location location = new Location(x, y);
@@ -44,14 +44,14 @@ namespace BattleshipCSharp
                         TextPrinter.PrintEmptyTile();
                     }
                 }
-                TextPrinter.PrintTile($"{(char)(65 + y)}");
+                TextPrinter.PrintHeaderTile($"{(char)(65 + y)}");
                 Console.WriteLine();
             }
 
-            TextPrinter.PrintTile(" ");
+            TextPrinter.PrintHeaderTile(" ");
             for (int x = board.XMin; x <= board.XMax; x++)
             {
-                TextPrinter.PrintTile(x.ToString());
+                TextPrinter.PrintHeaderTile(x.ToString());
             }
 
             Console.WriteLine();

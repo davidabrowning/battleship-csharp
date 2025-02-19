@@ -9,9 +9,15 @@ namespace BattleshipCSharp
     internal static class TextPrinter
     {
         private static ConsoleColor defaultColor = ConsoleColor.White;
-        public static void PrintTile(string text)
+        private static void PrintTile(string text)
         {
             Console.Write($" {text} ");
+        }
+        public static void PrintHeaderTile(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            PrintTile(text);
+            Console.ForegroundColor = defaultColor;
         }
         public static void PrintSunkTile()
         {
