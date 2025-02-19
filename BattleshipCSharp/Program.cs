@@ -2,9 +2,21 @@
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            //RunProgram();
+            RunTests();
+        }
+
+        private static void RunProgram()
+        {
+            Console.WriteLine("Running program...");
+        }
+
+        private static void RunTests()
+        {
+            TestRunner testRunner = new TestRunner();
+            testRunner.Go();
         }
     }
 }
