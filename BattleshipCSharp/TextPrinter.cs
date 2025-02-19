@@ -34,7 +34,7 @@ namespace BattleshipCSharp
         public static void PrintMissTile()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
-            PrintTile("O");
+            PrintTile(" ");
             Console.ForegroundColor = defaultColor;
         }
         public static void PrintEmptyTile()

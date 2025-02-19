@@ -20,6 +20,7 @@ namespace BattleshipCSharp
             {
                 NextTurn();
             }
+            TextPrinter.PrintSuccess($"\nYou won the game in {board.Attempts.Count} attempts!");
         }
         private void NextTurn()
         {
