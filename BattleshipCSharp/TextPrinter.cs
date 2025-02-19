@@ -13,6 +13,13 @@ namespace BattleshipCSharp
         {
             Console.Write($" {text} ");
         }
+        public static void PrintPageTitle(string text)
+        {
+            ConfirmContinueAndClear();
+            Console.ForegroundColor = defaultColor;
+            Console.WriteLine($" ========== {text} ========== ");
+            Console.ForegroundColor = defaultColor;
+        }
         public static void PrintHeaderTile(string text)
         {
             Console.ForegroundColor = ConsoleColor.Gray;

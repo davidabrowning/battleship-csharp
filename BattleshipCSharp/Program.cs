@@ -10,8 +10,8 @@
 
         private static void RunProgram()
         {
-            Game game = new Game();
-            game.Go();
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Go();
         }
 
         private static void RunTests()

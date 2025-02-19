@@ -13,6 +13,7 @@ namespace BattleshipCSharp
 
         public static void Print(Board board)
         {
+            Console.Clear();
             PrintColumnHeaders(board);
             PrintBoardArea(board);
             PrintColumnHeaders(board);

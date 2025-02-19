@@ -30,7 +30,6 @@ namespace BattleshipCSharp
                 return;
             }
             board.ProcessAttempt(location);
-            Console.Clear();
             BoardPrinter.Print(board);
         }
 
