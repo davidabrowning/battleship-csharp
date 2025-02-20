@@ -20,10 +20,10 @@ namespace BattleshipCSharp
         }
         private static void PrintColumnHeaders(Board board)
         {
-            TextPrinter.PrintHeaderTile(" ");
+            TilePrinter.PrintHeaderTile(" ");
             for (int x = board.XMin; x <= board.XMax; x++)
             {
-                TextPrinter.PrintHeaderTile(x.ToString());
+                TilePrinter.PrintHeaderTile(x.ToString());
             }
             Console.WriteLine();
         }
@@ -36,15 +36,15 @@ namespace BattleshipCSharp
                 {
                     Location location = new Location(x, y);
                     if (board.Fleet.IsSunk(location))
-                        TextPrinter.PrintSunkTile();
+                        TilePrinter.PrintSunkTile();
                     else if (board.Fleet.IsHit(location))
-                        TextPrinter.PrintHitTile();
+                        TilePrinter.PrintHitTile();
                     else if (board.Fleet.Contains(location))
-                        TextPrinter.PrintEmptyTile();
+                        TilePrinter.PrintEmptyTile();
                     else if (board.Attempts.Contains(location))
-                        TextPrinter.PrintMissTile();
+                        TilePrinter.PrintMissTile();
                     else
-                        TextPrinter.PrintEmptyTile();
+                        TilePrinter.PrintEmptyTile();
                 }
                 PrintRowHeader(y);
                 Console.WriteLine();
@@ -52,7 +52,7 @@ namespace BattleshipCSharp
         }
         private static void PrintRowHeader(int y)
         {
-            TextPrinter.PrintHeaderTile($"{(char)(65 + y)}");
+            TilePrinter.PrintHeaderTile($"{(char)(65 + y)}");
         }
     }
 }
