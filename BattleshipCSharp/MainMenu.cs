@@ -44,7 +44,17 @@ namespace BattleshipCSharp
         }
         private void StartSinglePlayerGame()
         {
-            Game game = new Game();
+            Game game = new GameVsSelf();
+            game.Go();
+        }
+        private void StartGameVsComputer()
+        {
+            Game game = new GameVsComputer();
+            game.Go();
+        }
+        private void StartMultiplayerGame()
+        {
+            Game game = new GameVsHuman();
             game.Go();
         }
     }

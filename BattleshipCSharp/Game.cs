@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleshipCSharp
 {
-    internal class Game
+    internal abstract class Game
     {
         Board board;
         public Game()
