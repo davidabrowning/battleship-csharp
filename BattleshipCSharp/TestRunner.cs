@@ -258,18 +258,38 @@ namespace BattleshipCSharp
             // Variables
             string title;
             GameVsHuman game;
+            int currentPlayer;
 
             title = "It is initially Player 0's turn";
             game = new GameVsHuman();
-            //TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
+            TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
 
             title = "It is Player 1's turn after Player 0 takes a turn";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(0, 0));
+            TestHelper.AssertEquals(title, 1, game.CurrentPlayer);
 
             title = "It is Player 0's turn after Player 1 takes a turn";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(0, 0));
+            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
 
             title = "Current player does not change after invalid input";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(0, 0));
+            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            currentPlayer = game.CurrentPlayer;
+            game.Boards[0].ProcessAttempt(new Location(-1, 0));
+            TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
 
             title = "Current player does not change after retrying existing location";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(2, 2));
+            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            currentPlayer = game.CurrentPlayer;
+            game.Boards[0].ProcessAttempt(new Location(2, 2));
+            TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
         }
     }
 }

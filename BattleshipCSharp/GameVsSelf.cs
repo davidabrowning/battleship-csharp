@@ -8,5 +8,9 @@ namespace BattleshipCSharp
 {
     internal class GameVsSelf : Game
     {
+        public GameVsSelf()
+        {
+            Boards.Add(new Board());
+        }
     }
 }

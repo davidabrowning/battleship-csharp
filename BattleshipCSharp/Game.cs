@@ -10,20 +10,22 @@ namespace BattleshipCSharp
     {
         // Fields
         Board board;
-        private List<Board> boards;
+        // private List<Board> boards;
 
         // Properties
-        public int AttemptsCompleted { get { return CalculateAttemptsCompleted(boards); } }
-        public bool IsOver { get { return CheckForGameOver(boards);  } }
+        public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
+        public int NumPlayers { get { return Boards.Count; } }
+        public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
+        public bool IsOver { get { return CheckForGameOver(Boards);  } }
+        public List<Board> Boards { get; private set; }
 
         public Game()
         {
-            boards = new List<Board>();
-            boards.Add(new Board());
+            Boards = new List<Board>();
         }
         public void Go()
         {
-            board = boards[0];
+            board = Boards[0];
             BoardPrinter.Print(board);
             while (!IsOver)
                 NextTurn(board);
