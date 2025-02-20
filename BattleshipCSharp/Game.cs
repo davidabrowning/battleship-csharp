@@ -49,17 +49,21 @@ namespace BattleshipCSharp
 
         private void NextTurn(Board board)
         {
-
             Location location = AskUserForLocation(board);
             if (location == null)
                 return;
+            if (CurrentPlayer > 0)
+                TextPrinter.PrintDialogPadder();
             board.ProcessAttempt(location);
             BoardPrinter.Print(Boards);
         }
 
         private Location? AskUserForLocation(Board board)
         {
-            TextPrinter.PrintPrompt($"\nChoose a location: ");
+            Console.WriteLine();
+            if (CurrentPlayer > 0)
+                TextPrinter.PrintDialogPadder();
+            TextPrinter.PrintPrompt($"Choose a location: ");
             string userInput = Console.ReadLine().ToUpper().Trim();
             if (userInput == "Q")
                 QuitGame();

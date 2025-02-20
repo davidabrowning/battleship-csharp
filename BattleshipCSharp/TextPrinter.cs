@@ -71,5 +71,9 @@ namespace BattleshipCSharp
             Console.Clear();
             Console.ForegroundColor = defaultColor;
         }
+        public  static void PrintDialogPadder()
+        {
+            Console.Write("                                             ");
+        }
     }
 }

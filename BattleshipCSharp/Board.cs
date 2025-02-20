@@ -34,21 +34,27 @@ namespace BattleshipCSharp
         {
             if (!IsOnBoard(location))
             {
-                Console.WriteLine("Not on board.");
+                TextPrinter.PrintWarning("Not on board.");
                 return;
             }
 
             if (Attempts.Contains(location))
             {
-                Console.WriteLine("Already attempted.");
+                TextPrinter.PrintWarning("Already attempted.");
                 return;
             }
 
             Attempts.Add(location);
             if (Fleet.Contains(location))
             {
+                TextPrinter.PrintSuccess("Hit!");
                 Fleet.ProcessHit(location);
             }
+            else
+            {
+                TextPrinter.PrintInfo("Miss.");
+            }
+            Thread.Sleep(2000);
         }
         public bool IsOnBoard(Location location)
         {
