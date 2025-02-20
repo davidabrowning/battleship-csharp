@@ -18,6 +18,8 @@ namespace BattleshipCSharp
             RunFleetTests();
             Console.WriteLine("Running Board tests");
             RunBoardTests();
+            Console.WriteLine("Running GameVsHuman tests");
+            RunGameVsHumanTests();
         }
 
         public void RunLocationTests()
@@ -249,6 +251,25 @@ namespace BattleshipCSharp
             board.Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
             board.Fleet.PlaceRandomly(board);
             TestHelper.AssertFalse(title, board.IsEmpty(board.Fleet.Ships[0].Locations[0]));
+        }
+
+        private void RunGameVsHumanTests()
+        {
+            // Variables
+            string title;
+            GameVsHuman game;
+
+            title = "It is initially Player 0's turn";
+            game = new GameVsHuman();
+            //TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
+
+            title = "It is Player 1's turn after Player 0 takes a turn";
+
+            title = "It is Player 0's turn after Player 1 takes a turn";
+
+            title = "Current player does not change after invalid input";
+
+            title = "Current player does not change after retrying existing location";
         }
     }
 }
