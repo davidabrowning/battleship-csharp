@@ -15,6 +15,7 @@ namespace BattleshipCSharp
         // Properties
         public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
         public int NumPlayers { get { return Boards.Count; } }
+        public Board CurrentBoard { get { return Boards[CurrentPlayer]; } }
         public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
         public bool IsOver { get { return CheckForGameOver(Boards);  } }
         public List<Board> Boards { get; private set; }
@@ -25,10 +26,9 @@ namespace BattleshipCSharp
         }
         public void Go()
         {
-            board = Boards[0];
-            BoardPrinter.Print(board);
+            BoardPrinter.Print(Boards);
             while (!IsOver)
-                NextTurn(board);
+                NextTurn(CurrentBoard);
             TextPrinter.PrintSuccess($"\nYou won the game in {board.Attempts.Count} attempts!");
         }
         private int CalculateAttemptsCompleted(List<Board> boards)
@@ -49,11 +49,12 @@ namespace BattleshipCSharp
 
         private void NextTurn(Board board)
         {
+
             Location location = AskUserForLocation(board);
             if (location == null)
                 return;
             board.ProcessAttempt(location);
-            BoardPrinter.Print(board);
+            BoardPrinter.Print(Boards);
         }
 
         private Location? AskUserForLocation(Board board)

@@ -11,8 +11,9 @@ namespace BattleshipCSharp
     internal static class BoardPrinter
     {
 
-        public static void Print(Board board)
+        public static void Print(List<Board> boards)
         {
+            Board board = boards[0];
             Console.Clear();
             PrintColumnHeaders(board);
             PrintBoardArea(board);
