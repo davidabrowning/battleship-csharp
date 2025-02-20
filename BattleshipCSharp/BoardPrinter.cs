@@ -14,9 +14,27 @@ namespace BattleshipCSharp
         public static void Print(List<Board> boards)
         {
             Console.Clear();
+            PrintBoardTitles(boards);
             PrintColumnHeaders(boards);
             PrintBoardArea(boards);
             PrintColumnHeaders(boards);
+        }
+        private static void PrintBoardTitles(List<Board> boards)
+        {
+            for (int playerNum = 0; playerNum < boards.Count; playerNum++)
+                PrintBoardTitle(boards[playerNum], playerNum);
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+        private static void PrintBoardTitle(Board board, int playerNum)
+        {
+            string titleString = "";
+            titleString += $"Player {playerNum + 1}";
+            titleString += $" | Attempts: { board.Attempts.Count }";
+            if (playerNum == 0)
+                for (int i = 0; i < 24 - board.Attempts.Count.ToString().Length; i++)
+                    titleString += " ";
+            TextPrinter.PrintInfoPartial(titleString);
         }
         private static void PrintColumnHeaders(List<Board> boards)
         {
@@ -24,13 +42,16 @@ namespace BattleshipCSharp
             TilePrinter.PrintHeaderTile(" ");
             for (int x = board.XMin; x <= board.XMax; x++)
                 TilePrinter.PrintHeaderTile(x.ToString());
-            TilePrinter.PrintHeaderTile(" ");
-            TilePrinter.PrintHeaderTile(" ");
-            TilePrinter.PrintHeaderTile(" ");
-            TilePrinter.PrintHeaderTile(" ");
-            TilePrinter.PrintHeaderTile(" ");
-            for (int x = board.XMin; x <= board.XMax; x++)
-                TilePrinter.PrintHeaderTile(x.ToString());
+            if (boards.Count > 1)
+            {
+                TilePrinter.PrintHeaderTile(" ");
+                TilePrinter.PrintHeaderTile(" ");
+                TilePrinter.PrintHeaderTile(" ");
+                TilePrinter.PrintHeaderTile(" ");
+                TilePrinter.PrintHeaderTile(" ");
+                for (int x = board.XMin; x <= board.XMax; x++)
+                    TilePrinter.PrintHeaderTile(x.ToString());
+            }
             Console.WriteLine();
         }
         private static void PrintBoardArea(List<Board> boards)

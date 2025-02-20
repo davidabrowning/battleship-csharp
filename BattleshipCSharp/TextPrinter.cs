@@ -34,6 +34,11 @@ namespace BattleshipCSharp
             Console.ForegroundColor = defaultColor;
             Console.WriteLine(text);
         }
+        public static void PrintInfoPartial(string text)
+        {
+            Console.ForegroundColor = defaultColor;
+            Console.Write(text);
+        }
         public static void PrintInfoInactive(string text)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;

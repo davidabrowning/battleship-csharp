@@ -59,7 +59,7 @@ namespace BattleshipCSharp
 
         private Location? AskUserForLocation(Board board)
         {
-            TextPrinter.PrintPrompt($"\n{board.Attempts.Count} attempts | Choose a location: ");
+            TextPrinter.PrintPrompt($"\nChoose a location: ");
             string userInput = Console.ReadLine().ToUpper().Trim();
             if (userInput == "Q")
                 QuitGame();
