@@ -10,11 +10,12 @@ namespace BattleshipCSharp
     {
         public void Go()
         {
+            TextPrinter.PrintWelcomeTitle("Hello, Admiral. Welcome to Battleship.");
             ShowMenu();
         }
         private void ShowMenu()
         {
-            TextPrinter.PrintPageTitle("Main Menu");
+            TextPrinter.PrintPageTitle("Battleship: Main Menu");
             TextPrinter.PrintInfo("[1] Start single player game");
             TextPrinter.PrintInfoInactive("[2] Start game against the computer (coming soon)");
             TextPrinter.PrintInfo("[3] Start multiplayer game");

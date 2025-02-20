@@ -10,6 +10,12 @@ namespace BattleshipCSharp
     {
         private static ConsoleColor defaultColor = ConsoleColor.White;
 
+        public static void PrintWelcomeTitle(string text)
+        {
+            Console.ForegroundColor = defaultColor;
+            Console.WriteLine(text);
+            Console.ForegroundColor = defaultColor;
+        }
         public static void PrintPageTitle(string text)
         {
             ConfirmContinueAndClear();
@@ -55,7 +61,7 @@ namespace BattleshipCSharp
         public static void ConfirmContinueAndClear()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("Press ENTER to continue.");
+            Console.WriteLine("\nPress ENTER to continue.");
             Console.ReadLine();
             Console.Clear();
             Console.ForegroundColor = defaultColor;
