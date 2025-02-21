@@ -39,23 +39,14 @@ namespace BattleshipCSharp
         public void ProcessAttempt(Location location)
         {
             if (!IsOnBoard(location))
-            {
-                TextPrinter.PrintWarning("Not on board.");
                 return;
-            }
 
             if (Attempts.Contains(location))
-            {
-                TextPrinter.PrintWarning("Already attempted.");
                 return;
-            }
 
             Attempts.Add(location);
             if (Fleet.Contains(location))
-            {
-                TextPrinter.PrintSuccess("Hit!");
                 Fleet.ProcessHit(location);
-            }
             else
             {
                 TextPrinter.PrintInfo("Miss.");
@@ -66,32 +57,22 @@ namespace BattleshipCSharp
         {
             if (XMin <= location.XPos && location.XPos <= XMax
                 && YMin <= location.YPos && location.YPos <= YMax)
-            {
                 return true;
-            }
             return false;
         }
         public bool IsEmpty(Location location)
         {
             if (!IsOnBoard(location))
-            {
                 return false;
-            }
             if (Fleet.Contains(location))
-            {
                 return false;
-            }
             return true;
         }
         public bool IsEmpty(List<Location> locations)
         {
             foreach (Location location in locations)
-            {
                 if (!IsEmpty(location))
-                {
                     return false;
-                }
-            }
             return true;
         }
     }

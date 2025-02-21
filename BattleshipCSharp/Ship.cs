@@ -19,13 +19,13 @@ namespace BattleshipCSharp
             Locations = new List<Location>();
             Hits = new List<Location>();
         }
-        public bool IsSunk()
-        {
-            return Locations.Count == Hits.Count;
-        }
         public bool IsHit(Location location)
         {
             return Hits.Contains(location);
+        }
+        public bool IsSunk()
+        {
+            return Locations.Count == Hits.Count;
         }
         public bool Contains(Location location)
         {
@@ -34,6 +34,10 @@ namespace BattleshipCSharp
         public void ProcessHit(Location location)
         {
             Hits.Add(location);
+            if (IsSunk())
+                TextPrinter.PrintSuccess(Name + " has been hit and sunk!");
+            else
+                TextPrinter.PrintSuccess("Hit!");
         }
         public void PlaceRandomly(Board board)
         {
