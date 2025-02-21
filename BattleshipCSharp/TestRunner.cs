@@ -18,6 +18,8 @@ namespace BattleshipCSharp
             RunFleetTests();
             Console.WriteLine("Running Board tests");
             RunBoardTests();
+            Console.WriteLine("Running GameVsHuman tests");
+            RunGameVsHumanTests();
         }
 
         public void RunLocationTests()
@@ -234,21 +236,60 @@ namespace BattleshipCSharp
             Board board;
             Location location;
 
-            title = "IsEmpty returns false when location is off of board";
+            title = "ContainsShips returns false when location is off of board";
             board = new Board();
             location = new Location(0, board.Height);
-            TestHelper.AssertFalse(title, board.IsEmpty(location));
+            TestHelper.AssertFalse(title, board.ContainsShips(location));
 
-            title = "IsEmpty initially returns true for origin";
+            title = "ContainsShips initially returns false for origin";
             board = new Board();
             location = new Location(0, 0);
-            TestHelper.AssertTrue(title, board.IsEmpty(location));
+            TestHelper.AssertFalse(title, board.ContainsShips(location));
 
-            title = "IsEmpty returns false if ship is present at location";
+            title = "ConstainsShips returns true if ship is present at location";
             board = new Board();
             board.Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
             board.Fleet.PlaceRandomly(board);
-            TestHelper.AssertFalse(title, board.IsEmpty(board.Fleet.Ships[0].Locations[0]));
+            TestHelper.AssertTrue(title, board.ContainsShips(board.Fleet.Ships[0].Locations[0]));
+        }
+
+        private void RunGameVsHumanTests()
+        {
+            // Variables
+            string title;
+            GameVsHuman game;
+            int currentPlayer;
+
+            title = "It is initially Player 0's turn";
+            game = new GameVsHuman();
+            TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
+
+            title = "It is Player 1's turn after Player 0 takes a turn";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(0, 0));
+            TestHelper.AssertEquals(title, 1, game.CurrentPlayer);
+
+            title = "It is Player 0's turn after Player 1 takes a turn";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(0, 0));
+            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
+
+            title = "Current player does not change after invalid input";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(0, 0));
+            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            currentPlayer = game.CurrentPlayer;
+            game.Boards[0].ProcessAttempt(new Location(-1, 0));
+            TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
+
+            title = "Current player does not change after retrying existing location";
+            game = new GameVsHuman();
+            game.Boards[0].ProcessAttempt(new Location(2, 2));
+            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            currentPlayer = game.CurrentPlayer;
+            game.Boards[0].ProcessAttempt(new Location(2, 2));
+            TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
         }
     }
 }

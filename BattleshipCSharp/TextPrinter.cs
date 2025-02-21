@@ -9,40 +9,31 @@ namespace BattleshipCSharp
     internal static class TextPrinter
     {
         private static ConsoleColor defaultColor = ConsoleColor.White;
-        private static void PrintTile(string text)
+
+        public static void PrintBlankLine(int numLines = 1)
         {
-            Console.Write($" {text} ");
+            for (int i = 0; i < numLines; i++)
+                Console.WriteLine();
         }
-        public static void PrintHeaderTile(string text)
+        public static void PrintBlankSpace(int numSpaces = 1)
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            PrintTile(text);
+            for (int i = 0; i < numSpaces; i++)
+                Console.Write(" ");
+        }
+        public static void PrintWelcomeTitle(string text)
+        {
+            Console.ForegroundColor = defaultColor;
+            Console.WriteLine(text);
             Console.ForegroundColor = defaultColor;
         }
-        public static void PrintSunkTile()
+        public static void PrintPageTitle(string text)
         {
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            PrintTile("X");
+            ConfirmContinueAndClear();
+            Console.ForegroundColor = defaultColor;
+            Console.WriteLine($" ========== {text} ========== ");
             Console.ForegroundColor = defaultColor;
         }
-        public static void PrintHitTile()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            PrintTile("X");
-            Console.ForegroundColor = defaultColor;
-        }
-        public static void PrintMissTile()
-        {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            PrintTile(" ");
-            Console.ForegroundColor = defaultColor;
-        }
-        public static void PrintEmptyTile()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            PrintTile("#");
-            Console.ForegroundColor = defaultColor;
-        }
+        
         public static void PrintPrompt(string text)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -52,6 +43,17 @@ namespace BattleshipCSharp
         {
             Console.ForegroundColor = defaultColor;
             Console.WriteLine(text);
+        }
+        public static void PrintInfoWithoutLineBreak(string text)
+        {
+            Console.ForegroundColor = defaultColor;
+            Console.Write(text);
+        }
+        public static void PrintInfoInactive(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine(text);
+            Console.ForegroundColor = defaultColor;
         }
         public static void PrintWarning(string text)
         {
@@ -74,10 +76,14 @@ namespace BattleshipCSharp
         public static void ConfirmContinueAndClear()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("Press ENTER to continue.");
+            Console.WriteLine("\nPress ENTER to continue.");
             Console.ReadLine();
             Console.Clear();
             Console.ForegroundColor = defaultColor;
+        }
+        public  static void PrintDialogPadder()
+        {
+            Console.Write("                                             ");
         }
     }
 }

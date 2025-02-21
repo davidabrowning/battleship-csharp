@@ -6,43 +6,72 @@ using System.Threading.Tasks;
 
 namespace BattleshipCSharp
 {
-    internal class Game
+    internal abstract class Game
     {
-        Board board;
+        // Fields
+        private GamePrinter gamePrinter;
+
+        // Properties
+        public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
+        public int MaxAttempts { get { return Boards[0].Attempts.Count; } }
+        public int NumPlayers { get { return Boards.Count; } }
+        public Board CurrentBoard { get { return Boards[CurrentPlayer]; } }
+        public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
+        public int XMin { get { return Boards[0].XMin; } }
+        public int XMax { get { return Boards[0].XMax; } }
+        public int YMin { get { return Boards[0].YMin; } }
+        public int YMax { get { return Boards[0].YMax; } }
+        public bool IsOver { get { return CheckForGameOver(Boards);  } }
+        public List<Board> Boards { get; private set; }
+
         public Game()
         {
-            board = new Board();
+            gamePrinter = new GamePrinter(this);
+            Boards = new List<Board>();
         }
         public void Go()
         {
-            BoardPrinter.Print(board);
-            while (board.Fleet.IsSunk() == false)
-            {
-                NextTurn();
-            }
-            TextPrinter.PrintSuccess($"\nYou won the game in {board.Attempts.Count} attempts!");
+            gamePrinter.PrintAll();
+            while (!IsOver)
+                NextTurn(CurrentBoard);
+            TextPrinter.PrintSuccess($"\nYou won the game in { MaxAttempts } attempts!");
         }
-        private void NextTurn()
+        private int CalculateAttemptsCompleted(List<Board> boards)
         {
-            Location location = AskUserForLocation();
-            if (location == null)
-            {
-                return;
-            }
-            board.ProcessAttempt(location);
-            Console.Clear();
-            BoardPrinter.Print(board);
+            int attemptsCompleted = 0;
+            foreach (Board board in boards)
+                attemptsCompleted += board.Attempts.Count;
+            return attemptsCompleted;
         }
 
-        private Location? AskUserForLocation()
+        private bool CheckForGameOver(List<Board> boards)
         {
-            TextPrinter.PrintPrompt($"\n{board.Attempts.Count} attempts | Choose a location: ");
+            foreach (Board board in boards)
+                if (board.Fleet.IsSunk())
+                    return true;
+            return false;
+        }
+
+        private void NextTurn(Board board)
+        {
+            Location location = AskUserForLocation(board);
+            if (location == null)
+                return;
+            if (CurrentPlayer > 0)
+                TextPrinter.PrintDialogPadder();
+            board.ProcessAttempt(location);
+            gamePrinter.PrintAll();
+        }
+
+        private Location? AskUserForLocation(Board board)
+        {
+            Console.WriteLine();
+            if (CurrentPlayer > 0)
+                TextPrinter.PrintDialogPadder();
+            TextPrinter.PrintPrompt($"Choose a location: ");
             string userInput = Console.ReadLine().ToUpper().Trim();
             if (userInput == "Q")
-            {
                 QuitGame();
-                return null;
-            }
             try
             {
                 string row = userInput.Substring(0, 1);
