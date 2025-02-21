@@ -11,83 +11,86 @@ namespace BattleshipCSharp
     internal static class BoardPrinter
     {
 
-        public static void Print(List<Board> boards)
+        public static void Print(Game game)
         {
             Console.Clear();
-            PrintBoardTitles(boards);
-            PrintColumnHeaders(boards);
-            PrintBoardArea(boards);
-            PrintColumnHeaders(boards);
+            PrintBoardTitles(game);
+            PrintTileArea(game);
         }
-        private static void PrintBoardTitles(List<Board> boards)
+        private static void PrintBoardTitles(Game game)
         {
-            for (int playerNum = 0; playerNum < boards.Count; playerNum++)
-                PrintBoardTitle(boards[playerNum], playerNum);
+            foreach (Board board in game.Boards)
+                PrintBoardTitle(board);
+            TextPrinter.PrintBlankLine(2);
+        }
+        private static void PrintBoardTitle(Board board)
+        {
+            TextPrinter.PrintInfoWithoutLineBreak(
+                $"{board.PlayerName} | Attempts: {board.Attempts.Count}");
+            TextPrinter.PrintBlankSpace(24);
+        }
+        private static void PrintGameHeaders(Game game)
+        {
+            TilePrinter.PrintBlankTile();
+            foreach (Board board in game.Boards)
+                PrintBoardHeaders(board);
             Console.WriteLine();
-            Console.WriteLine();
         }
-        private static void PrintBoardTitle(Board board, int playerNum)
+
+        private static void PrintBoardHeaders(Board board)
         {
-            string titleString = "";
-            titleString += $"Player {playerNum + 1}";
-            titleString += $" | Attempts: { board.Attempts.Count }";
-            if (playerNum == 0)
-                for (int i = 0; i < 24 - board.Attempts.Count.ToString().Length; i++)
-                    titleString += " ";
-            TextPrinter.PrintInfoPartial(titleString);
+            PrintHeaderTiles(board);
+            TilePrinter.PrintBlankTile(5);
         }
-        private static void PrintColumnHeaders(List<Board> boards)
+
+        private static void PrintHeaderTiles(Board board)
         {
-            Board board = boards[0];
-            TilePrinter.PrintHeaderTile(" ");
             for (int x = board.XMin; x <= board.XMax; x++)
                 TilePrinter.PrintHeaderTile(x.ToString());
-            if (boards.Count > 1)
-            {
-                TilePrinter.PrintHeaderTile(" ");
-                TilePrinter.PrintHeaderTile(" ");
-                TilePrinter.PrintHeaderTile(" ");
-                TilePrinter.PrintHeaderTile(" ");
-                TilePrinter.PrintHeaderTile(" ");
-                for (int x = board.XMin; x <= board.XMax; x++)
-                    TilePrinter.PrintHeaderTile(x.ToString());
-            }
-            Console.WriteLine();
         }
-        private static void PrintBoardArea(List<Board> boards)
+
+        private static void PrintTileArea(Game game)
         {
-            for (int y = boards[0].YMin; y <= boards[0].YMax; y++)
-            {
-                foreach (Board board in boards)
-                    PrintBoardRow(board, y);
-                Console.WriteLine();
-            }
+            PrintGameHeaders(game);
+            for (int y = game.YMin; y <= game.YMax; y++)
+                PrintGameRow(game, y);
+            PrintGameHeaders(game);
+        }
+        private static void PrintGameRow(Game game, int y)
+        {
+            foreach (Board board in game.Boards)
+                PrintBoardRow(board, y);
+            TextPrinter.PrintBlankLine();
         }
         private static void PrintBoardRow(Board board, int y)
         {
             PrintRowHeader(y);
-            for (int x = board.XMin; x <= board.XMax; x++)
-            {
-                Location location = new Location(x, y);
-                if (board.Fleet.IsSunk(location))
-                    TilePrinter.PrintSunkTile();
-                else if (board.Fleet.IsHit(location))
-                    TilePrinter.PrintHitTile();
-                else if (board.Fleet.Contains(location))
-                    TilePrinter.PrintEmptyTile();
-                else if (board.Attempts.Contains(location))
-                    TilePrinter.PrintMissTile();
-                else
-                    TilePrinter.PrintEmptyTile();
-            }
+            PrintRowTiles(board, y);
             PrintRowHeader(y);
-            TilePrinter.PrintHeaderTile(" ");
-            TilePrinter.PrintHeaderTile(" ");
-            TilePrinter.PrintHeaderTile(" ");
+            TilePrinter.PrintBlankTile(3);
         }
         private static void PrintRowHeader(int y)
         {
             TilePrinter.PrintHeaderTile($"{(char)(65 + y)}");
+        }
+        private static void PrintRowTiles(Board board, int y)
+        {
+            for (int x = board.XMin; x <= board.XMax; x++)
+                PrintTile(board, y, x);
+        }
+        private static void PrintTile(Board board, int y, int x)
+        {
+            Location location = new Location(x, y);
+            if (board.Fleet.IsSunk(location))
+                TilePrinter.PrintSunkTile();
+            else if (board.Fleet.IsHit(location))
+                TilePrinter.PrintHitTile();
+            else if (board.Fleet.Contains(location))
+                TilePrinter.PrintEmptyTile();
+            else if (board.Attempts.Contains(location))
+                TilePrinter.PrintMissTile();
+            else
+                TilePrinter.PrintEmptyTile();
         }
     }
 }

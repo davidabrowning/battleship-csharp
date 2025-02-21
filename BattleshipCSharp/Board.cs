@@ -8,6 +8,7 @@ namespace BattleshipCSharp
 {
     internal class Board
     {
+        public string PlayerName { get; private set; }
         public Fleet Fleet { get; private set; }
         public List<Location> Attempts { get; private set; }
         public int Height { get; private set; }
@@ -18,6 +19,7 @@ namespace BattleshipCSharp
         public int YMax { get { return Height - 1; } }
         public Board()
         {
+            PlayerName = "Player";
             Fleet = new Fleet();
             Attempts = new List<Location>();
             Height = 10;
@@ -29,6 +31,10 @@ namespace BattleshipCSharp
             Fleet.Add(new Ship("Submarine", ShipLength.Submarine));
             Fleet.Add(new Ship("Destroyer", ShipLength.Destroyer));
             Fleet.PlaceRandomly(this);
+        }
+        public Board(string playerName) : this()
+        {
+            PlayerName = playerName;
         }
         public void ProcessAttempt(Location location)
         {

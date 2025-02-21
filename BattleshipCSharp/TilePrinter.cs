@@ -13,6 +13,11 @@ namespace BattleshipCSharp
         {
             Console.Write($" {text} ");
         }
+        public static void PrintBlankTile(int numTiles = 1)
+        {
+            for (int i = 0; i < numTiles; i++)
+                PrintTile(" ");
+        }
         public static void PrintHeaderTile(string text)
         {
             Console.ForegroundColor = ConsoleColor.Gray;

@@ -10,6 +10,16 @@ namespace BattleshipCSharp
     {
         private static ConsoleColor defaultColor = ConsoleColor.White;
 
+        public static void PrintBlankLine(int numLines = 1)
+        {
+            for (int i = 0; i < numLines; i++)
+                Console.WriteLine();
+        }
+        public static void PrintBlankSpace(int numSpaces = 1)
+        {
+            for (int i = 0; i < numSpaces; i++)
+                Console.Write(" ");
+        }
         public static void PrintWelcomeTitle(string text)
         {
             Console.ForegroundColor = defaultColor;
@@ -34,7 +44,7 @@ namespace BattleshipCSharp
             Console.ForegroundColor = defaultColor;
             Console.WriteLine(text);
         }
-        public static void PrintInfoPartial(string text)
+        public static void PrintInfoWithoutLineBreak(string text)
         {
             Console.ForegroundColor = defaultColor;
             Console.Write(text);

@@ -8,15 +8,16 @@ namespace BattleshipCSharp
 {
     internal abstract class Game
     {
-        // Fields
-        Board board;
-        // private List<Board> boards;
 
         // Properties
         public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
         public int NumPlayers { get { return Boards.Count; } }
         public Board CurrentBoard { get { return Boards[CurrentPlayer]; } }
         public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
+        public int XMin { get { return Boards[0].XMin; } }
+        public int XMax { get { return Boards[0].XMax; } }
+        public int YMin { get { return Boards[0].YMin; } }
+        public int YMax { get { return Boards[0].YMax; } }
         public bool IsOver { get { return CheckForGameOver(Boards);  } }
         public List<Board> Boards { get; private set; }
 
@@ -26,10 +27,10 @@ namespace BattleshipCSharp
         }
         public void Go()
         {
-            BoardPrinter.Print(Boards);
+            BoardPrinter.Print(this);
             while (!IsOver)
                 NextTurn(CurrentBoard);
-            TextPrinter.PrintSuccess($"\nYou won the game in {board.Attempts.Count} attempts!");
+            TextPrinter.PrintSuccess($"\nYou won the game!");
         }
         private int CalculateAttemptsCompleted(List<Board> boards)
         {
@@ -55,7 +56,7 @@ namespace BattleshipCSharp
             if (CurrentPlayer > 0)
                 TextPrinter.PrintDialogPadder();
             board.ProcessAttempt(location);
-            BoardPrinter.Print(Boards);
+            BoardPrinter.Print(this);
         }
 
         private Location? AskUserForLocation(Board board)

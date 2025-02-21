@@ -10,8 +10,8 @@ namespace BattleshipCSharp
     {
         public GameVsHuman()
         {
-            Boards.Add(new Board());
-            Boards.Add(new Board());
+            Boards.Add(new Board("Player 1"));
+            Boards.Add(new Board("Player 2"));
         }
     }
 }
