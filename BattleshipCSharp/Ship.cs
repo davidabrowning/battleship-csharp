@@ -44,7 +44,7 @@ namespace BattleshipCSharp
             List<Location> randomLocations;
             do
                 randomLocations = GetRandomLocations(board);
-            while (board.ContainsShips(randomLocations));
+            while (board.ContainsShips(randomLocations) || board.IsOffBoard(randomLocations));
             this.Locations = randomLocations;            
         }
         private List<Location> GetRandomLocations(Board board)

@@ -78,6 +78,13 @@ namespace BattleshipCSharp
                 return false;
             return true;
         }
+        public bool IsOffBoard(List<Location> locations)
+        {
+            foreach (Location location in locations)
+                if (IsOffBoard(location))
+                    return true;
+            return false;
+        }
         public bool ContainsShips(Location location)
         {
             return Fleet.Contains(location);
