@@ -35,46 +35,32 @@ namespace BattleshipCSharp
         {
             Hits.Add(location);
             if (IsSunk())
-                TextPrinter.PrintSuccess(Name + " has been hit and sunk!");
+                TextPrinter.PrintSuccess($"Hit! {Name} has been sunk!");
             else
                 TextPrinter.PrintSuccess("Hit!");
         }
         public void PlaceRandomly(Board board)
         {
-            List<Location> potentialLocations = new List<Location>();
-            bool potentialLocationsAreEmpty = false;
+            List<Location> randomLocations;
+            do
+                randomLocations = GetRandomLocations(board);
+            while (!board.IsEmpty(randomLocations));
+            this.Locations = randomLocations;            
+        }
+        private List<Location> GetRandomLocations(Board board)
+        {
+            List<Location> randomLocations = new List<Location>();
             Random random = new Random();
-
-            while (potentialLocationsAreEmpty == false)
-            {
-                potentialLocations.Clear();
-
-                // Choose ship orientation
-                ShipOrientation orientation = (ShipOrientation)random.Next(0, 2);
-
-                // Choose ship origin
-                int xstart = random.Next(board.XMin, board.XMax + 1);
-                int ystart = random.Next(board.YMin, board.YMax + 1);
-
-                switch (orientation)
-                {
-                    case ShipOrientation.Horizontal:
-                        for (int i = 0; i < Length; i++)
-                            potentialLocations.Add(new Location(xstart + i, ystart));
-                        break;
-                    case ShipOrientation.Vertical:
-                        for (int i = 0; i < Length; i++)
-                            potentialLocations.Add(new Location(xstart, ystart + i));
-                        break;
-                    default:
-                        break;
-                }
-
-                // Check if ship locations are valid
-                potentialLocationsAreEmpty = board.IsEmpty(potentialLocations);
-            }
-
-            Locations = potentialLocations;
+            int startingX = random.Next(board.XMin, board.XMax + 1);
+            int startingY = random.Next(board.YMin, board.YMax + 1);
+            ShipOrientation orientation = (ShipOrientation)random.Next(0, 2);
+            if (orientation == ShipOrientation.Horizontal)
+                for (int i = 0; i < Length; i++)
+                    randomLocations.Add(new Location(startingX + i, startingY));
+            else
+                for (int i = 0; i < Length; i++)
+                    randomLocations.Add(new Location(startingX, startingY + i));
+            return randomLocations;
         }
     }
 }
