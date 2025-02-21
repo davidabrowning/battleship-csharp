@@ -8,6 +8,8 @@ namespace BattleshipCSharp
 {
     internal abstract class Game
     {
+        // Fields
+        private GamePrinter boardPrinter;
 
         // Properties
         public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
@@ -23,11 +25,12 @@ namespace BattleshipCSharp
 
         public Game()
         {
+            boardPrinter = new GamePrinter(this);
             Boards = new List<Board>();
         }
         public void Go()
         {
-            BoardPrinter.Print(this);
+            boardPrinter.PrintAll(this);
             while (!IsOver)
                 NextTurn(CurrentBoard);
             TextPrinter.PrintSuccess($"\nYou won the game!");
@@ -56,7 +59,7 @@ namespace BattleshipCSharp
             if (CurrentPlayer > 0)
                 TextPrinter.PrintDialogPadder();
             board.ProcessAttempt(location);
-            BoardPrinter.Print(this);
+            boardPrinter.PrintAll(this);
         }
 
         private Location? AskUserForLocation(Board board)
