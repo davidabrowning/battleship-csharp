@@ -13,6 +13,7 @@ namespace BattleshipCSharp
 
         // Properties
         public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
+        public int MaxAttempts { get { return Boards[0].Attempts.Count; } }
         public int NumPlayers { get { return Boards.Count; } }
         public Board CurrentBoard { get { return Boards[CurrentPlayer]; } }
         public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
@@ -33,7 +34,7 @@ namespace BattleshipCSharp
             gamePrinter.PrintAll();
             while (!IsOver)
                 NextTurn(CurrentBoard);
-            TextPrinter.PrintSuccess($"\nYou won the game!");
+            TextPrinter.PrintSuccess($"\nYou won the game in { MaxAttempts } attempts!");
         }
         private int CalculateAttemptsCompleted(List<Board> boards)
         {
