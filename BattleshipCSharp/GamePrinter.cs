@@ -26,7 +26,7 @@ namespace BattleshipCSharp
         {
             foreach (Board board in game.Boards)
                 BoardPrinter.PrintTitle(board);
-            TextPrinter.PrintBlankLine(2);
+            TextPrinter.PrintBlankLine();
         }
         private void PrintPlayingArea()
         {
@@ -37,7 +37,6 @@ namespace BattleshipCSharp
         }
         private void PrintAllColumnHeaders()
         {
-            TilePrinter.PrintBlankTile();
             foreach (Board board in game.Boards)
             {
                 BoardPrinter.PrintColumnHeaders(board);
