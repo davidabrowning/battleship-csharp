@@ -19,83 +19,35 @@ namespace BattleshipCSharp
         public void PrintAll()
         {
             Console.Clear();
-            PrintBoardTitles();
-            PrintTileArea();
+            PrintTitleArea();
+            PrintPlayingArea();
         }
-        private void PrintBoardTitles()
+        private void PrintTitleArea()
         {
             foreach (Board board in game.Boards)
-                PrintBoardTitle(board);
+                BoardPrinter.PrintTitle(board);
             TextPrinter.PrintBlankLine(2);
         }
-        private void PrintBoardTitle(Board board)
+        private void PrintPlayingArea()
         {
-            TextPrinter.PrintInfoWithoutLineBreak(
-                $"{board.PlayerName} | Attempts: {board.Attempts.Count}");
-            TextPrinter.PrintBlankSpace(24);
+            PrintAllColumnHeaders();
+            for (int y = game.YMin; y <= game.YMax; y++)
+                PrintPlayingAreaRow(y);
+            PrintAllColumnHeaders();
         }
-        private void PrintGameHeaders()
+        private void PrintAllColumnHeaders()
         {
             TilePrinter.PrintBlankTile();
             foreach (Board board in game.Boards)
-                PrintBoardHeaders(board);
-            Console.WriteLine();
-        }
-
-        private void PrintBoardHeaders(Board board)
-        {
-            PrintHeaderTiles(board);
-            TilePrinter.PrintBlankTile(5);
-        }
-
-        private void PrintHeaderTiles(Board board)
-        {
-            for (int x = board.XMin; x <= board.XMax; x++)
-                TilePrinter.PrintHeaderTile(x.ToString());
-        }
-
-        private void PrintTileArea()
-        {
-            PrintGameHeaders();
-            for (int y = game.YMin; y <= game.YMax; y++)
-                PrintGameRow(y);
-            PrintGameHeaders();
-        }
-        private void PrintGameRow(int y)
-        {
-            foreach (Board board in game.Boards)
-                PrintBoardRow(board, y);
+                BoardPrinter.PrintColumnHeaders(board);
             TextPrinter.PrintBlankLine();
         }
-        private void PrintBoardRow(Board board, int y)
+
+        private void PrintPlayingAreaRow(int y)
         {
-            PrintRowHeader(y);
-            PrintRowTiles(board, y);
-            PrintRowHeader(y);
-            TilePrinter.PrintBlankTile(3);
-        }
-        private void PrintRowHeader(int y)
-        {
-            TilePrinter.PrintHeaderTile($"{(char)(65 + y)}");
-        }
-        private void PrintRowTiles(Board board, int y)
-        {
-            for (int x = board.XMin; x <= board.XMax; x++)
-                PrintTile(board, y, x);
-        }
-        private void PrintTile(Board board, int y, int x)
-        {
-            Location location = new Location(x, y);
-            if (board.Fleet.IsSunk(location))
-                TilePrinter.PrintSunkTile();
-            else if (board.Fleet.IsHit(location))
-                TilePrinter.PrintHitTile();
-            else if (board.Fleet.Contains(location))
-                TilePrinter.PrintEmptyTile();
-            else if (board.Attempts.Contains(location))
-                TilePrinter.PrintMissTile();
-            else
-                TilePrinter.PrintEmptyTile();
+            foreach (Board board in game.Boards)
+                BoardPrinter.PrintBoardRow(board, y);
+            TextPrinter.PrintBlankLine();
         }
     }
 }
