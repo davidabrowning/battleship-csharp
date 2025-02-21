@@ -39,15 +39,24 @@ namespace BattleshipCSharp
         {
             TilePrinter.PrintBlankTile();
             foreach (Board board in game.Boards)
+            {
                 BoardPrinter.PrintColumnHeaders(board);
+                PrintBoardSpacer();
+            }
             TextPrinter.PrintBlankLine();
         }
-
         private void PrintPlayingAreaRow(int y)
         {
             foreach (Board board in game.Boards)
+            {
                 BoardPrinter.PrintBoardRow(board, y);
+                PrintBoardSpacer();
+            }
             TextPrinter.PrintBlankLine();
+        }
+        private void PrintBoardSpacer()
+        {
+            TilePrinter.PrintBlankTile(3);
         }
     }
 }

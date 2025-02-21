@@ -14,19 +14,18 @@ namespace BattleshipCSharp
                 $"{board.PlayerName} | Attempts: {board.Attempts.Count}");
             TextPrinter.PrintBlankSpace(24);
         }
-
         public static void PrintColumnHeaders(Board board)
         {
+            TilePrinter.PrintBlankTile();
             for (int x = board.XMin; x <= board.XMax; x++)
                 TilePrinter.PrintHeaderTile(x.ToString());
-            TilePrinter.PrintBlankTile(5);
+            TilePrinter.PrintBlankTile();
         }
         public static void PrintBoardRow(Board board, int y)
         {
             PrintRowHeader(y);
             PrintRowTiles(board, y);
             PrintRowHeader(y);
-            TilePrinter.PrintBlankTile(3);
         }
         private static void PrintRowHeader(int y)
         {
