@@ -236,21 +236,21 @@ namespace BattleshipCSharp
             Board board;
             Location location;
 
-            title = "IsEmpty returns false when location is off of board";
+            title = "ContainsShips returns false when location is off of board";
             board = new Board();
             location = new Location(0, board.Height);
-            TestHelper.AssertFalse(title, board.IsEmpty(location));
+            TestHelper.AssertFalse(title, board.ContainsShips(location));
 
-            title = "IsEmpty initially returns true for origin";
+            title = "ContainsShips initially returns false for origin";
             board = new Board();
             location = new Location(0, 0);
-            TestHelper.AssertTrue(title, board.IsEmpty(location));
+            TestHelper.AssertFalse(title, board.ContainsShips(location));
 
-            title = "IsEmpty returns false if ship is present at location";
+            title = "ConstainsShips returns true if ship is present at location";
             board = new Board();
             board.Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
             board.Fleet.PlaceRandomly(board);
-            TestHelper.AssertFalse(title, board.IsEmpty(board.Fleet.Ships[0].Locations[0]));
+            TestHelper.AssertTrue(title, board.ContainsShips(board.Fleet.Ships[0].Locations[0]));
         }
 
         private void RunGameVsHumanTests()
