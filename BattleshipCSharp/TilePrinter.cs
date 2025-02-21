@@ -42,7 +42,7 @@ namespace BattleshipCSharp
             PrintTile(" ");
             Console.ForegroundColor = defaultColor;
         }
-        public static void PrintEmptyTile()
+        public static void PrintOpenOceanTile()
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             PrintTile("#");

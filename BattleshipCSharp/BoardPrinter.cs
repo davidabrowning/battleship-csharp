@@ -39,16 +39,16 @@ namespace BattleshipCSharp
         private static void PrintTile(Board board, int y, int x)
         {
             Location location = new Location(x, y);
-            if (board.Fleet.IsSunk(location))
+            if (board.Fleet.IsSunk(location))           // Sunk ship
                 TilePrinter.PrintSunkTile();
-            else if (board.Fleet.IsHit(location))
+            else if (board.Fleet.IsHit(location))       // Hit ship
                 TilePrinter.PrintHitTile();
-            else if (board.Fleet.Contains(location))
-                TilePrinter.PrintEmptyTile();
-            else if (board.Attempts.Contains(location))
+            else if (board.Fleet.Contains(location))    // Unhit (hidden) ship
+                TilePrinter.PrintBlankTile();
+            else if (board.Attempts.Contains(location)) // Missed shot attempt
                 TilePrinter.PrintMissTile();
             else
-                TilePrinter.PrintEmptyTile();
+                TilePrinter.PrintOpenOceanTile();           // Open ocean
         }
     }
 }

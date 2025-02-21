@@ -82,6 +82,8 @@ namespace BattleshipCSharp
             }
             catch (Exception ex)
             {
+                if (CurrentPlayer > 0)
+                    TextPrinter.PrintDialogPadder();
                 TextPrinter.PrintWarning("Invalid input.");
                 return null;
             }
