@@ -60,15 +60,11 @@ namespace BattleshipCSharp
                 {
                     case ShipOrientation.Horizontal:
                         for (int i = 0; i < Length; i++)
-                        {
                             potentialLocations.Add(new Location(xstart + i, ystart));
-                        }
                         break;
                     case ShipOrientation.Vertical:
                         for (int i = 0; i < Length; i++)
-                        {
                             potentialLocations.Add(new Location(xstart, ystart + i));
-                        }
                         break;
                     default:
                         break;
