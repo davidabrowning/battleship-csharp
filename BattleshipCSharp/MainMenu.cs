@@ -49,6 +49,7 @@ namespace BattleshipCSharp
                     ShowMenu();
                     break;
             }
+            ShowMenu();
         }
         private void StartSinglePlayerGame()
         {
