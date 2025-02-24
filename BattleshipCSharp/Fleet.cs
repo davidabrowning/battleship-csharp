@@ -53,7 +53,7 @@ namespace BattleshipCSharp
                 if (ship.Contains(location))
                     ship.ProcessHit(location);
             if (IsSunk())
-                TextPrinter.PrintSuccess("All ships in fleet have been sunk!");
+                ChatPrinter.PrintSuccess("All ships in fleet have been sunk!");
         }
         public void PlaceRandomly(Board board)
         {
