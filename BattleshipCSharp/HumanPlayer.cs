@@ -8,7 +8,7 @@ namespace BattleshipCSharp
 {
     internal class HumanPlayer : Player
     {
-        public HumanPlayer() : base("Player")
+        public HumanPlayer(string name) : base(name)
         {
 
         }

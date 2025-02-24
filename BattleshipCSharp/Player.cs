@@ -8,9 +8,9 @@ namespace BattleshipCSharp
 {
     abstract class Player
     {
-        string Name { get; }
-        Board MyBoard { get; }
-        Board OpponentBoard { get; set; }
+        public string Name { get; }
+        public Board MyBoard { get; }
+        public Board OpponentBoard { get; set; }
         public Player(string name)
         {
             Name = name;
