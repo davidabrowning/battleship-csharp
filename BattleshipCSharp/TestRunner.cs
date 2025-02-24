@@ -20,6 +20,8 @@ namespace BattleshipCSharp
             RunBoardTests();
             Console.WriteLine("Running GameVsHuman tests");
             RunGameVsHumanTests();
+            Console.WriteLine("Running ComputerPlayer tests");
+            RunComputerPlayerTests();
         }
 
         public void RunLocationTests()
@@ -290,6 +292,14 @@ namespace BattleshipCSharp
             currentPlayer = game.CurrentPlayer;
             game.Boards[0].ProcessAttempt(new Location(2, 2));
             TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
+        }
+
+        private void RunComputerPlayerTests()
+        {
+            // Variables
+            string title;
+            ComputerPlayer computerPlayer;
+            Board board;
         }
     }
 }

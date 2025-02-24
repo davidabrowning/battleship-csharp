@@ -22,6 +22,7 @@ namespace BattleshipCSharp
         public int YMin { get { return Boards[0].YMin; } }
         public int YMax { get { return Boards[0].YMax; } }
         public bool IsOver { get { return CheckForGameOver(Boards);  } }
+        public List<IPlayer> Players { get; private set; }
         public List<Board> Boards { get; private set; }
 
         public Game()
