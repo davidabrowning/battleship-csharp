@@ -35,9 +35,9 @@ namespace BattleshipCSharp
         {
             Hits.Add(location);
             if (IsSunk())
-                TextPrinter.PrintSuccess($"Hit! {Name} has been sunk!");
+                ChatPrinter.PrintSuccess($"Hit! {Name} has been sunk!");
             else
-                TextPrinter.PrintSuccess("Hit!");
+                ChatPrinter.PrintSuccess("Hit!");
         }
         public void PlaceRandomly(Board board)
         {
