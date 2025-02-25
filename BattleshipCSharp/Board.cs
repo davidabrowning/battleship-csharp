@@ -47,7 +47,7 @@ namespace BattleshipCSharp
             if (ValidAttemptLocation(location))
                 LogAttempt(location);
         }
-        private bool ValidAttemptLocation(Location location)
+        public bool ValidAttemptLocation(Location location)
         {
             if (IsOffBoard(location))
                 return false;
