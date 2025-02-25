@@ -21,10 +21,10 @@ namespace BattleshipCSharp
         private void PrintMenuOptions()
         {
             TextPrinter.PrintPageTitle("Battleship: Main Menu");
-            TextPrinter.PrintNeutral("[1] Start single player game");
-            TextPrinter.PrintNeutral("[2] Start game against the computer");
-            TextPrinter.PrintNeutral("[3] Start multiplayer game");
-            TextPrinter.PrintNeutral("[Q] Quit");
+            TextPrinter.PrintLineNeutral("[1] Start single player game");
+            TextPrinter.PrintLineNeutral("[2] Start game against the computer");
+            TextPrinter.PrintLineNeutral("[3] Start multiplayer game");
+            TextPrinter.PrintLineNeutral("[Q] Quit");
         }
         private void HandleMenuInput()
         {
