@@ -32,7 +32,7 @@ namespace BattleshipCSharp
         private void PrintPlayingArea()
         {
             PrintAllColumnHeaders();
-            for (int y = game.YMin; y <= game.YMax; y++)
+            for (int y = Board.YMin; y <= Board.YMax; y++)
                 PrintPlayingAreaRow(y);
             PrintAllColumnHeaders();
         }

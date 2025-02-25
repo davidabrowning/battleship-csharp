@@ -144,8 +144,8 @@ namespace BattleshipCSharp
                 ship.PlaceRandomly(board);
                 foreach (Location loc in ship.Locations)
                 {
-                    if (loc.XPos < 0 || loc.XPos >= board.Width
-                        || loc.YPos < 0 || loc.YPos >= board.Height)
+                    if (loc.XPos < Board.XMin || loc.XPos > Board.XMax
+                        || loc.YPos < Board.YMin || loc.YPos >= Board.YMax)
                     {
                         shipPlacedOutsideOfGameBoard = true;
                     }
@@ -240,7 +240,7 @@ namespace BattleshipCSharp
 
             title = "ContainsShips returns false when location is off of board";
             board = new Board();
-            location = new Location(0, board.Height);
+            location = new Location(Board.XMin, Board.YMax + 1);
             TestHelper.AssertFalse(title, board.ContainsShips(location));
 
             title = "ContainsShips initially returns false for origin";

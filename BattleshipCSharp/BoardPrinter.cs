@@ -17,7 +17,7 @@ namespace BattleshipCSharp
         public static void PrintColumnHeaders(Board board)
         {
             TilePrinter.PrintBlankTile();
-            for (int x = board.XMin; x <= board.XMax; x++)
+            for (int x = Board.XMin; x <= Board.XMax; x++)
                 TilePrinter.PrintHeaderTile(x.ToString());
             TilePrinter.PrintBlankTile();
         }
@@ -33,7 +33,7 @@ namespace BattleshipCSharp
         }
         private static void PrintRowTiles(Board board, int y)
         {
-            for (int x = board.XMin; x <= board.XMax; x++)
+            for (int x = Board.XMin; x <= Board.XMax; x++)
                 PrintTile(board, y, x);
         }
         private static void PrintTile(Board board, int y, int x)

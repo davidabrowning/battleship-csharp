@@ -9,24 +9,18 @@ namespace BattleshipCSharp
 {
     internal class Board
     {
+        public static int XMin = 0;
+        public static int YMin = 0;
+        public static int XMax = 9;
+        public static int YMax = 9;
         public string PlayerName { get; private set; }
         public Fleet Fleet { get; private set; }
         public List<Location> Attempts { get; private set; }
-        public int Height { get; private set; }
-        public int Width { get; private set; }
-        public int XMin { get; }
-        public int YMin { get; }
-        public int XMax { get { return Width - 1; } }
-        public int YMax { get { return Height - 1; } }
         public Board()
         {
             PlayerName = "Player";
             Fleet = new Fleet();
             Attempts = new List<Location>();
-            Height = 10;
-            Width = 10;
-            XMin = 0;
-            YMin = 0;
 
             AddStandardShipsToFleet();
             PlaceFleet();

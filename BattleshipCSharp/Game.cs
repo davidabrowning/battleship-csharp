@@ -17,10 +17,6 @@ namespace BattleshipCSharp
         public int NumPlayers { get { return Boards.Count; } }
         public Board CurrentBoard { get { return Boards[CurrentPlayer]; } }
         public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
-        public int XMin { get { return Boards[0].XMin; } }
-        public int XMax { get { return Boards[0].XMax; } }
-        public int YMin { get { return Boards[0].YMin; } }
-        public int YMax { get { return Boards[0].YMax; } }
         public bool IsOver { get { return CheckForGameOver(Boards);  } }
         public List<Player> Players { get; private set; }
         public List<Board> Boards { get; private set; }
@@ -79,7 +75,7 @@ namespace BattleshipCSharp
                 string col = userInput.Substring(1);
                 int y = (int)Convert.ToChar(row) - 65;
                 int x = int.Parse(col);
-                if (x < XMin || x > XMax || y < YMin || y > YMax)
+                if (x < Board.XMin || x > Board.XMax || y < Board.YMin || y > Board.YMax)
                 {
                     ChatPrinter.PrintWarning("Invalid coordinates.");
                     return null;
