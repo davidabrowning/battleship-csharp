@@ -11,7 +11,7 @@ namespace BattleshipCSharp
         public static void PrintTitle(Board board)
         {
             TextPrinter.PrintNeutralWithoutLineBreak(
-                $"{board.PlayerName} | Attempts: {board.Attempts.Count}");
+                $"{board.PlayerName} | Attempts: {board.ShotsSustained.Count}");
             TextPrinter.PrintBlankSpace(24);
         }
         public static void PrintColumnHeaders(Board board)
@@ -45,7 +45,7 @@ namespace BattleshipCSharp
                 TilePrinter.PrintHitTile();
             else if (board.Fleet.Contains(location))    // Unhit (hidden) ship
                 TilePrinter.PrintHeaderTile("s");
-            else if (board.Attempts.Contains(location)) // Missed shot attempt
+            else if (board.ShotsSustained.Contains(location)) // Missed shot attempt
                 TilePrinter.PrintMissTile();
             else
                 TilePrinter.PrintOpenOceanTile();       // Open ocean

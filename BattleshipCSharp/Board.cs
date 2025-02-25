@@ -13,15 +13,15 @@ namespace BattleshipCSharp
         public static int YMin = 0;
         public static int XMax = 9;
         public static int YMax = 9;
-        public string PlayerName { get; private set; }
-        public Fleet Fleet { get; private set; }
-        public List<Location> Attempts { get; private set; }
-        public int ShotsSustained { get { return Attempts.Count;  } }
+        public string PlayerName { get; }
+        public Fleet Fleet { get; }
+        public List<Location> ShotsSustained { get; }
+        public int NumShotsSustained { get { return ShotsSustained.Count; } }
         public Board()
         {
             PlayerName = "Player";
             Fleet = new Fleet();
-            Attempts = new List<Location>();
+            ShotsSustained = new List<Location>();
 
             AddStandardShipsToFleet();
             PlaceFleet();
@@ -42,7 +42,7 @@ namespace BattleshipCSharp
         {
             Fleet.PlaceRandomly(this);
         }
-        public void ProcessAttempt(Location location)
+        public void SustainShot(Location location)
         {
             if (ValidAttemptLocation(location))
                 LogAttempt(location);
@@ -52,14 +52,14 @@ namespace BattleshipCSharp
             if (IsOffBoard(location))
                 return false;
 
-            if (Attempts.Contains(location))
+            if (ShotsSustained.Contains(location))
                 return false;
 
             return true;
         }
         private void LogAttempt(Location location)
         {
-            Attempts.Add(location);
+            ShotsSustained.Add(location);
             if (Fleet.Contains(location))
                 Fleet.ProcessHit(location);
             else

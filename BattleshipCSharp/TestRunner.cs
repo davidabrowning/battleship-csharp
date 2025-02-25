@@ -268,29 +268,29 @@ namespace BattleshipCSharp
 
             title = "It is Player 1's turn after Player 0 takes a turn";
             game = new GameVsHuman();
-            game.Players[0].OpponentBoard.ProcessAttempt(new Location(0, 0));
+            game.Players[0].OpponentBoard.SustainShot(new Location(0, 0));
             TestHelper.AssertEquals(title, 1, game.Players.IndexOf(game.CurrentPlayer));
 
             title = "It is Player 0's turn after Player 1 takes a turn";
             game = new GameVsHuman();
-            game.Players[0].OpponentBoard.ProcessAttempt(new Location(0, 0));
-            game.Players[1].OpponentBoard.ProcessAttempt(new Location(1, 0));
+            game.Players[0].OpponentBoard.SustainShot(new Location(0, 0));
+            game.Players[1].OpponentBoard.SustainShot(new Location(1, 0));
             TestHelper.AssertEquals(title, 0, game.Players.IndexOf(game.CurrentPlayer));
 
             title = "Current player does not change after invalid input";
             game = new GameVsHuman();
-            game.Players[0].OpponentBoard.ProcessAttempt(new Location(0, 0));
-            game.Players[1].OpponentBoard.ProcessAttempt(new Location(1, 0));
+            game.Players[0].OpponentBoard.SustainShot(new Location(0, 0));
+            game.Players[1].OpponentBoard.SustainShot(new Location(1, 0));
             currentPlayer = game.CurrentPlayer;
-            game.Players[0].OpponentBoard.ProcessAttempt(new Location(-1, 0));
+            game.Players[0].OpponentBoard.SustainShot(new Location(-1, 0));
             TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
 
             title = "Current player does not change after retrying existing location";
             game = new GameVsHuman();
-            game.Players[0].OpponentBoard.ProcessAttempt(new Location(2, 2));
-            game.Players[1].OpponentBoard.ProcessAttempt(new Location(1, 0));
+            game.Players[0].OpponentBoard.SustainShot(new Location(2, 2));
+            game.Players[1].OpponentBoard.SustainShot(new Location(1, 0));
             currentPlayer = game.CurrentPlayer;
-            game.Players[0].OpponentBoard.ProcessAttempt(new Location(2, 2));
+            game.Players[0].OpponentBoard.SustainShot(new Location(2, 2));
             TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
         }
 
