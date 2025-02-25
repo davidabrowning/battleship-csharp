@@ -10,7 +10,7 @@ namespace BattleshipCSharp
     {
         public void Go()
         {
-            TextPrinter.PrintWelcomeTitle("Hello, Admiral. Welcome to Battleship.");
+            TextPrinter.PrintLineNeutral("Hello, Admiral. Welcome to Battleship.");
             ShowMenu();
         }
         private void ShowMenu()
@@ -35,17 +35,16 @@ namespace BattleshipCSharp
                     break;
                 case "2":
                     StartGameVsComputer();
-                    ShowMenu();
                     break;
                 case "3":
                     StartMultiplayerGame();
                     break;
                 case "Q":
-                    TextPrinter.PrintNeutral("Goodbye!");
+                    TextPrinter.PrintLineNeutral("Goodbye!");
                     Environment.Exit(0);
                     break;
                 default:
-                    TextPrinter.PrintWarning("Invalid input.");
+                    TextPrinter.PrintLineWarning("Invalid input.");
                     ShowMenu();
                     break;
             }
