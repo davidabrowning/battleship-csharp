@@ -10,8 +10,7 @@ namespace BattleshipCSharp
     {
         public static void PrintTitle(Board board)
         {
-            TextPrinter.PrintNeutralWithoutLineBreak(
-                $"{board.PlayerName} | Attempts: {board.ShotsSustained.Count}");
+            TextPrinter.PrintNeutral($"{board.PlayerName} | Attempts: {board.ShotsSustained.Count}");
             TextPrinter.PrintBlankSpace(24);
         }
         public static void PrintColumnHeaders(Board board)
