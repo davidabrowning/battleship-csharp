@@ -10,7 +10,7 @@ namespace BattleshipCSharp
     internal class HumanPlayer : Player
     {
         public HumanPlayer() : base("Player") { }
-        public HumanPlayer(string name) : this() { }
+        public HumanPlayer(string name) : base(name) { }
         public override void TakeShot()
         {
             Location location = GetNextMove();
