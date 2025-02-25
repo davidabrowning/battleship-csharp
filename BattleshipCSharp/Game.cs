@@ -34,7 +34,7 @@ namespace BattleshipCSharp
             gamePrinter.PrintAll();
             while (!IsOver)
                 NextTurn(CurrentBoard);
-            TextPrinter.PrintSuccess($"\nYou won the game in { MaxAttempts } attempts!");
+            ChatPrinter.PrintSuccess($"\nYou won the game in { MaxAttempts } attempts!");
         }
         private int CalculateAttemptsCompleted(List<Board> boards)
         {
@@ -54,21 +54,21 @@ namespace BattleshipCSharp
 
         private void NextTurn(Board board)
         {
+            if (CurrentPlayer == 0)
+                ChatPrinter.RemovePadding();
+            else
+                ChatPrinter.AddPadding();
             Location location = AskUserForLocation(board);
             if (location == null)
                 return;
-            if (CurrentPlayer > 0)
-                TextPrinter.PrintDialogPadder();
+            ChatLog.Clear();
             board.ProcessAttempt(location);
             gamePrinter.PrintAll();
         }
 
         private Location? AskUserForLocation(Board board)
         {
-            Console.WriteLine();
-            if (CurrentPlayer > 0)
-                TextPrinter.PrintDialogPadder();
-            TextPrinter.PrintPrompt($"Choose a location: ");
+            ChatPrinter.PrintPrompt($"Choose a location: ");
             string userInput = Console.ReadLine().ToUpper().Trim();
             if (userInput == "Q")
                 QuitGame();
@@ -76,22 +76,25 @@ namespace BattleshipCSharp
             {
                 string row = userInput.Substring(0, 1);
                 string col = userInput.Substring(1);
-                int x = int.Parse(col);
                 int y = (int)Convert.ToChar(row) - 65;
+                int x = int.Parse(col);
+                if (x < XMin || x > XMax || y < YMin || y > YMax)
+                {
+                    ChatPrinter.PrintWarning("Invalid coordinates.");
+                    return null;
+                }
                 return new Location(x, y);
             }
             catch (Exception ex)
             {
-                if (CurrentPlayer > 0)
-                    TextPrinter.PrintDialogPadder();
-                TextPrinter.PrintWarning("Invalid input.");
+                ChatPrinter.PrintWarning("Invalid input.");
                 return null;
             }
         }
 
         private void QuitGame()
         {
-            TextPrinter.PrintWarning("Game over.");
+            ChatPrinter.PrintWarning("Game over.");
             Environment.Exit(0);
         }
     }

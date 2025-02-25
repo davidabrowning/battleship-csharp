@@ -51,7 +51,6 @@ namespace BattleshipCSharp
         {
             if (ValidAttemptLocation(location))
                 LogAttempt(location);
-            Thread.Sleep(2000);
         }
         private bool ValidAttemptLocation(Location location)
         {
@@ -69,7 +68,7 @@ namespace BattleshipCSharp
             if (Fleet.Contains(location))
                 Fleet.ProcessHit(location);
             else
-                TextPrinter.PrintInfo("Miss.");
+                ChatPrinter.PrintNeutral("Miss.");
         }
         public bool IsOffBoard(Location location)
         {

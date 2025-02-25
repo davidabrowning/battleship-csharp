@@ -21,6 +21,7 @@ namespace BattleshipCSharp
             Console.Clear();
             PrintTitleArea();
             PrintPlayingArea();
+            ChatLog.Print();
         }
         private void PrintTitleArea()
         {

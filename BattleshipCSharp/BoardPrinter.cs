@@ -10,7 +10,7 @@ namespace BattleshipCSharp
     {
         public static void PrintTitle(Board board)
         {
-            TextPrinter.PrintInfoWithoutLineBreak(
+            TextPrinter.PrintNeutral(
                 $"{board.PlayerName} | Attempts: {board.Attempts.Count}");
             TextPrinter.PrintBlankSpace(24);
         }
