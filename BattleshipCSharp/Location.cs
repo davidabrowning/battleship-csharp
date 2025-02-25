@@ -34,7 +34,11 @@ namespace BattleshipCSharp
         }
         public override string ToString()
         {
-            return $"({XPos}, {YPos})";
+            return $"{ConvertToChar(YPos)}{XPos}";
+        }
+        public static char ConvertToChar(int y)
+        {
+            return (char)(y + 65);
         }
 
     }
