@@ -10,7 +10,7 @@ namespace BattleshipCSharp
     {
         public void Go()
         {
-            TextPrinter.PrintWelcomeTitle("Hello, Admiral. Welcome to Battleship.");
+            TextPrinter.PrintLineNeutral("Hello, Admiral. Welcome to Battleship.");
             ShowMenu();
         }
         private void ShowMenu()
@@ -21,10 +21,10 @@ namespace BattleshipCSharp
         private void PrintMenuOptions()
         {
             TextPrinter.PrintPageTitle("Battleship: Main Menu");
-            TextPrinter.PrintNeutral("[1] Start single player game");
-            TextPrinter.PrintInactive("[2] Start game against the computer (coming soon)");
-            TextPrinter.PrintNeutral("[3] Start multiplayer game");
-            TextPrinter.PrintNeutral("[Q] Quit");
+            TextPrinter.PrintLineNeutral("[1] Start single player game");
+            TextPrinter.PrintLineInactive("[2] Start game against the computer (coming soon)");
+            TextPrinter.PrintLineNeutral("[3] Start multiplayer game");
+            TextPrinter.PrintLineNeutral("[Q] Quit");
         }
         private void HandleMenuInput()
         {
@@ -34,18 +34,18 @@ namespace BattleshipCSharp
                     StartSinglePlayerGame();
                     break;
                 case "2":
-                    TextPrinter.PrintWarning("This feature is coming soon.");
+                    TextPrinter.PrintLineWarning("This feature is coming soon.");
                     ShowMenu();
                     break;
                 case "3":
                     StartMultiplayerGame();
                     break;
                 case "Q":
-                    TextPrinter.PrintNeutral("Goodbye!");
+                    TextPrinter.PrintLineNeutral("Goodbye!");
                     Environment.Exit(0);
                     break;
                 default:
-                    TextPrinter.PrintWarning("Invalid input.");
+                    TextPrinter.PrintLineWarning("Invalid input.");
                     ShowMenu();
                     break;
             }
