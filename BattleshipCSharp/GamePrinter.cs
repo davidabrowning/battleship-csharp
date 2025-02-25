@@ -26,7 +26,7 @@ namespace BattleshipCSharp
         private void PrintTitleArea()
         {
             foreach (Player player in game.Players)
-                BoardPrinter.PrintTitle(player.OpponentBoard);
+                BoardPrinter.PrintTitle(player);
             TextPrinter.PrintBlankLine();
         }
         private void PrintPlayingArea()

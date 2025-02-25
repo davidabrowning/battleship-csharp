@@ -8,9 +8,9 @@ namespace BattleshipCSharp
 {
     internal static class BoardPrinter
     {
-        public static void PrintTitle(Board board)
+        public static void PrintTitle(Player player)
         {
-            TextPrinter.PrintNeutral($"{board.PlayerName} | Attempts: {board.ShotsSustained.Count}");
+            TextPrinter.PrintNeutral($"{player.Name} | Attempts: {player.ShotsTaken}");
             TextPrinter.PrintBlankSpace(24);
         }
         public static void PrintColumnHeaders(Board board)
