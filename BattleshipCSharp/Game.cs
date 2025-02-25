@@ -55,11 +55,7 @@ namespace BattleshipCSharp
         private void NextTurn(Player player)
         {
             PrintChatPadding();
-            Location location = player.GetNextMove();
-            if (location == null)
-                return; // Get user to try again before proceeding
-            ChatLog.Clear();
-            player.OpponentBoard.SustainShot(location);
+            player.TakeShot();
             gamePrinter.PrintAll();
         }
 

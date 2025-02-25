@@ -12,7 +12,11 @@ namespace BattleshipCSharp
         {
 
         }
-        public override Location GetNextMove()
+        public override void TakeShot()
+        {
+
+        }
+        private Location GetNextMove()
         {
             // Not implemented
             return null;

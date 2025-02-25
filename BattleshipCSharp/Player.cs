@@ -18,7 +18,7 @@ namespace BattleshipCSharp
             Name = name;
             MyBoard = new Board(name);
         }
-        public abstract Location GetNextMove();
+        public abstract void TakeShot();
         public virtual void PlaceFleet()
         {
             // Not yet implemented

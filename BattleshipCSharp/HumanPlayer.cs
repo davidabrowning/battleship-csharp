@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,15 @@ namespace BattleshipCSharp
     {
         public HumanPlayer() : base("Player") { }
         public HumanPlayer(string name) : this() { }
-        public override Location GetNextMove()
+        public override void TakeShot()
+        {
+            Location location = GetNextMove();
+            if (location == null)
+                return; // Get user to try again before proceeding
+            ChatLog.Clear();
+            OpponentBoard.SustainShot(location);
+        }
+        private Location GetNextMove()
         {
             ChatPrinter.PrintPrompt($"Choose a location: ");
             string userInput = Console.ReadLine().ToUpper().Trim();
