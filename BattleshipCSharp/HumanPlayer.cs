@@ -8,10 +8,8 @@ namespace BattleshipCSharp
 {
     internal class HumanPlayer : Player
     {
-        public HumanPlayer(string name) : base(name)
-        {
-
-        }
+        public HumanPlayer() : base("Player") { }
+        public HumanPlayer(string name) : this() { }
         public override Location GetNextMove()
         {
             // Not implemented

@@ -145,7 +145,7 @@ namespace BattleshipCSharp
                 foreach (Location loc in ship.Locations)
                 {
                     if (loc.XPos < Board.XMin || loc.XPos > Board.XMax
-                        || loc.YPos < Board.YMin || loc.YPos >= Board.YMax)
+                        || loc.YPos < Board.YMin || loc.YPos > Board.YMax)
                     {
                         shipPlacedOutsideOfGameBoard = true;
                     }
@@ -260,37 +260,37 @@ namespace BattleshipCSharp
             // Variables
             string title;
             GameVsHuman game;
-            int currentPlayer;
+            Player currentPlayer;
 
             title = "It is initially Player 0's turn";
             game = new GameVsHuman();
-            TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
+            TestHelper.AssertEquals(title, 0, game.Players.IndexOf(game.CurrentPlayer));
 
             title = "It is Player 1's turn after Player 0 takes a turn";
             game = new GameVsHuman();
-            game.Boards[0].ProcessAttempt(new Location(0, 0));
-            TestHelper.AssertEquals(title, 1, game.CurrentPlayer);
+            game.Players[0].OpponentBoard.ProcessAttempt(new Location(0, 0));
+            TestHelper.AssertEquals(title, 1, game.Players.IndexOf(game.CurrentPlayer));
 
             title = "It is Player 0's turn after Player 1 takes a turn";
             game = new GameVsHuman();
-            game.Boards[0].ProcessAttempt(new Location(0, 0));
-            game.Boards[1].ProcessAttempt(new Location(1, 0));
-            TestHelper.AssertEquals(title, 0, game.CurrentPlayer);
+            game.Players[0].OpponentBoard.ProcessAttempt(new Location(0, 0));
+            game.Players[1].OpponentBoard.ProcessAttempt(new Location(1, 0));
+            TestHelper.AssertEquals(title, 0, game.Players.IndexOf(game.CurrentPlayer));
 
             title = "Current player does not change after invalid input";
             game = new GameVsHuman();
-            game.Boards[0].ProcessAttempt(new Location(0, 0));
-            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            game.Players[0].OpponentBoard.ProcessAttempt(new Location(0, 0));
+            game.Players[1].OpponentBoard.ProcessAttempt(new Location(1, 0));
             currentPlayer = game.CurrentPlayer;
-            game.Boards[0].ProcessAttempt(new Location(-1, 0));
+            game.Players[0].OpponentBoard.ProcessAttempt(new Location(-1, 0));
             TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
 
             title = "Current player does not change after retrying existing location";
             game = new GameVsHuman();
-            game.Boards[0].ProcessAttempt(new Location(2, 2));
-            game.Boards[1].ProcessAttempt(new Location(1, 0));
+            game.Players[0].OpponentBoard.ProcessAttempt(new Location(2, 2));
+            game.Players[1].OpponentBoard.ProcessAttempt(new Location(1, 0));
             currentPlayer = game.CurrentPlayer;
-            game.Boards[0].ProcessAttempt(new Location(2, 2));
+            game.Players[0].OpponentBoard.ProcessAttempt(new Location(2, 2));
             TestHelper.AssertEquals(title, currentPlayer, game.CurrentPlayer);
         }
 

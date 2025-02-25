@@ -16,6 +16,7 @@ namespace BattleshipCSharp
         public string PlayerName { get; private set; }
         public Fleet Fleet { get; private set; }
         public List<Location> Attempts { get; private set; }
+        public int ShotsSustained { get { return Attempts.Count;  } }
         public Board()
         {
             PlayerName = "Player";

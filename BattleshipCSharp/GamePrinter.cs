@@ -25,8 +25,8 @@ namespace BattleshipCSharp
         }
         private void PrintTitleArea()
         {
-            foreach (Board board in game.Boards)
-                BoardPrinter.PrintTitle(board);
+            foreach (Player player in game.Players)
+                BoardPrinter.PrintTitle(player.OpponentBoard);
             TextPrinter.PrintBlankLine();
         }
         private void PrintPlayingArea()
@@ -38,18 +38,18 @@ namespace BattleshipCSharp
         }
         private void PrintAllColumnHeaders()
         {
-            foreach (Board board in game.Boards)
+            foreach (Player player in game.Players)
             {
-                BoardPrinter.PrintColumnHeaders(board);
+                BoardPrinter.PrintColumnHeaders(player.OpponentBoard);
                 PrintBoardSpacer();
             }
             TextPrinter.PrintBlankLine();
         }
         private void PrintPlayingAreaRow(int y)
         {
-            foreach (Board board in game.Boards)
+            foreach (Player player in game.Players)
             {
-                BoardPrinter.PrintBoardRow(board, y);
+                BoardPrinter.PrintBoardRow(player.OpponentBoard, y);
                 PrintBoardSpacer();
             }
             TextPrinter.PrintBlankLine();

@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace BattleshipCSharp
 {
-    internal class ComputerPlayer
+    internal class ComputerPlayer : Player
     {
+        public ComputerPlayer() : base("Computer")
+        {
+
+        }
+        public override Location GetNextMove()
+        {
+            // Not implemented
+            return null;
+        }
     }
 }

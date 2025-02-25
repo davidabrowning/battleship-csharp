@@ -44,11 +44,11 @@ namespace BattleshipCSharp
             else if (board.Fleet.IsHit(location))       // Hit ship
                 TilePrinter.PrintHitTile();
             else if (board.Fleet.Contains(location))    // Unhit (hidden) ship
-                TilePrinter.PrintOpenOceanTile();
+                TilePrinter.PrintHeaderTile("s");
             else if (board.Attempts.Contains(location)) // Missed shot attempt
                 TilePrinter.PrintMissTile();
             else
-                TilePrinter.PrintOpenOceanTile();           // Open ocean
+                TilePrinter.PrintOpenOceanTile();       // Open ocean
         }
     }
 }

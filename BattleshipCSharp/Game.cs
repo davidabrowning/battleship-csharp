@@ -12,54 +12,57 @@ namespace BattleshipCSharp
         private GamePrinter gamePrinter;
 
         // Properties
-        public int AttemptsCompleted { get { return CalculateAttemptsCompleted(Boards); } }
-        public int MaxAttempts { get { return Boards[0].Attempts.Count; } }
-        public int NumPlayers { get { return Boards.Count; } }
-        public Board CurrentBoard { get { return Boards[CurrentPlayer]; } }
-        public int CurrentPlayer { get { return AttemptsCompleted % NumPlayers; } }
-        public bool IsOver { get { return CheckForGameOver(Boards);  } }
+        public Player CurrentPlayer { get { return Players.ElementAt(CalculateTotalShots() % Players.Count); } }
+        public bool IsOver { get { return CheckForGameOver();  } }
         public List<Player> Players { get; private set; }
-        public List<Board> Boards { get; private set; }
 
         public Game()
         {
             gamePrinter = new GamePrinter(this);
-            Boards = new List<Board>();
+            Players = new List<Player>();
         }
         public void Go()
         {
             gamePrinter.PrintAll();
             while (!IsOver)
-                NextTurn(CurrentBoard);
-            ChatPrinter.PrintSuccess($"\nYou won the game in { MaxAttempts } attempts!");
+                NextTurn(CurrentPlayer);
+            ChatPrinter.PrintSuccess($"\nYou won the game in { CalculateMaxShots() } attempts!");
         }
-        private int CalculateAttemptsCompleted(List<Board> boards)
+        private int CalculateTotalShots()
         {
-            int attemptsCompleted = 0;
-            foreach (Board board in boards)
-                attemptsCompleted += board.Attempts.Count;
-            return attemptsCompleted;
+            int shotsTaken = 0;
+            foreach (Player player in Players)
+                shotsTaken += player.ShotsTaken;
+            return shotsTaken;
         }
 
-        private bool CheckForGameOver(List<Board> boards)
+        private int CalculateMaxShots()
         {
-            foreach (Board board in boards)
-                if (board.Fleet.IsSunk())
+            int maxShotsTaken = 0;
+            foreach (Player player in Players)
+                maxShotsTaken = Math.Max(maxShotsTaken, player.ShotsTaken);
+            return maxShotsTaken;
+        }
+
+        private bool CheckForGameOver()
+        {
+            foreach (Player player in Players)
+                if (player.IsVictorious)
                     return true;
             return false;
         }
 
-        private void NextTurn(Board board)
+        private void NextTurn(Player player)
         {
-            if (CurrentPlayer == 0)
+            if (Players.IndexOf(CurrentPlayer) == 0)
                 ChatPrinter.RemovePadding();
             else
                 ChatPrinter.AddPadding();
-            Location location = AskUserForLocation(board);
+            Location location = AskUserForLocation(player.OpponentBoard);
             if (location == null)
                 return;
             ChatLog.Clear();
-            board.ProcessAttempt(location);
+            player.OpponentBoard.ProcessAttempt(location);
             gamePrinter.PrintAll();
         }
 
