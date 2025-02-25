@@ -300,6 +300,9 @@ namespace BattleshipCSharp
             string title;
             ComputerPlayer computerPlayer;
             Board board;
+
+            title = "After hits on A0 and A1, CPU prefers A2 for next shot";
+
         }
     }
 }
