@@ -10,14 +10,14 @@ namespace BattleshipCSharp
     {
         public static void PrintTitle(Board board)
         {
-            TextPrinter.PrintNeutral(
-                $"{board.PlayerName} | Attempts: {board.Attempts.Count}");
+            TextPrinter.PrintNeutralWithoutLineBreak(
+                $"{board.PlayerName} | Attempts: {board.ShotsSustained.Count}");
             TextPrinter.PrintBlankSpace(24);
         }
         public static void PrintColumnHeaders(Board board)
         {
             TilePrinter.PrintBlankTile();
-            for (int x = board.XMin; x <= board.XMax; x++)
+            for (int x = Board.XMin; x <= Board.XMax; x++)
                 TilePrinter.PrintHeaderTile(x.ToString());
             TilePrinter.PrintBlankTile();
         }
@@ -33,7 +33,7 @@ namespace BattleshipCSharp
         }
         private static void PrintRowTiles(Board board, int y)
         {
-            for (int x = board.XMin; x <= board.XMax; x++)
+            for (int x = Board.XMin; x <= Board.XMax; x++)
                 PrintTile(board, y, x);
         }
         private static void PrintTile(Board board, int y, int x)
@@ -44,11 +44,11 @@ namespace BattleshipCSharp
             else if (board.Fleet.IsHit(location))       // Hit ship
                 TilePrinter.PrintHitTile();
             else if (board.Fleet.Contains(location))    // Unhit (hidden) ship
-                TilePrinter.PrintOpenOceanTile();
-            else if (board.Attempts.Contains(location)) // Missed shot attempt
+                TilePrinter.PrintHeaderTile("s");
+            else if (board.ShotsSustained.Contains(location)) // Missed shot attempt
                 TilePrinter.PrintMissTile();
             else
-                TilePrinter.PrintOpenOceanTile();           // Open ocean
+                TilePrinter.PrintOpenOceanTile();       // Open ocean
         }
     }
 }

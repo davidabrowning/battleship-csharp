@@ -51,8 +51,8 @@ namespace BattleshipCSharp
         {
             List<Location> randomLocations = new List<Location>();
             Random random = new Random();
-            int startingX = random.Next(board.XMin, board.XMax + 1);
-            int startingY = random.Next(board.YMin, board.YMax + 1);
+            int startingX = random.Next(Board.XMin, Board.XMax + 1);
+            int startingY = random.Next(Board.YMin, Board.YMax + 1);
             ShipOrientation orientation = (ShipOrientation)random.Next(0, 2);
             if (orientation == ShipOrientation.Horizontal)
                 for (int i = 0; i < Length; i++)
