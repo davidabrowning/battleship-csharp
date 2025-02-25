@@ -13,7 +13,7 @@ namespace BattleshipCSharp
         public static int YMin = 0;
         public static int XMax = 9;
         public static int YMax = 9;
-        public string PlayerName { get; }
+        public string PlayerName { get; private set; }
         public Fleet Fleet { get; }
         public List<Location> ShotsSustained { get; }
         public int NumShotsSustained { get { return ShotsSustained.Count; } }
