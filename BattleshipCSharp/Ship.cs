@@ -23,6 +23,10 @@ namespace BattleshipCSharp
         {
             return Hits.Contains(location);
         }
+        public bool IsHitButNotSunk(Location location)
+        {
+            return Hits.Contains(location) && !IsSunk();
+        }
         public bool IsSunk()
         {
             return Locations.Count == Hits.Count;
