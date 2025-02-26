@@ -15,6 +15,15 @@ namespace BattleshipCSharp
         public Fleet()
         {
             Ships = new List<Ship>();
+            AddStandardShipsToFleet();
+        }
+        public void AddStandardShipsToFleet()
+        {
+            Add(new Ship("Carrier", ShipLength.Carrier));
+            Add(new Ship("Battleship", ShipLength.Battleship));
+            Add(new Ship("Cruiser", ShipLength.Cruiser));
+            Add(new Ship("Submarine", ShipLength.Submarine));
+            Add(new Ship("Destroyer", ShipLength.Destroyer));
         }
         public void Add(Ship ship)
         {

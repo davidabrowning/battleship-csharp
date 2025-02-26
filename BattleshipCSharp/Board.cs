@@ -23,20 +23,11 @@ namespace BattleshipCSharp
             Fleet = new Fleet();
             ShotsSustained = new List<Location>();
 
-            AddStandardShipsToFleet();
             PlaceFleet();
         }
         public Board(string playerName) : this()
         {
             PlayerName = playerName;
-        }
-        public void AddStandardShipsToFleet()
-        {
-            Fleet.Add(new Ship("Carrier", ShipLength.Carrier));
-            Fleet.Add(new Ship("Battleship", ShipLength.Battleship));
-            Fleet.Add(new Ship("Cruiser", ShipLength.Cruiser));
-            Fleet.Add(new Ship("Submarine", ShipLength.Submarine));
-            Fleet.Add(new Ship("Destroyer", ShipLength.Destroyer));
         }
         public void PlaceFleet()
         {

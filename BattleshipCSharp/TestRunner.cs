@@ -210,17 +210,17 @@ namespace BattleshipCSharp
             Fleet fleet;
             Board board;
 
-            title = "Fleet size is initially 0";
+            title = "Fleet size is initially 5";
             fleet = new Fleet();
-            TestHelper.AssertEquals(title, 0, fleet.Size);
+            TestHelper.AssertEquals(title, 5, fleet.Size);
 
-            title = "Fleet size is 2 after adding 2 ships";
+            title = "Fleet size is 7 after adding 2 ships";
             fleet = new Fleet();
             ship = new Ship("Destroyer", ShipLength.Destroyer);
             ship2 = new Ship("Submarine", ShipLength.Submarine);
             fleet.Add(ship);
             fleet.Add(ship2);
-            TestHelper.AssertEquals(title, 2, fleet.Size);
+            TestHelper.AssertEquals(title, 7, fleet.Size);
 
             title = "PlaceRandomly places ships";
             board = new Board();
