@@ -41,6 +41,13 @@ namespace BattleshipCSharp
                     return true;
             return false;
         }
+        public bool IsHitButNotSunk(Location location)
+        {
+            foreach (Ship ship in Ships)
+                if (ship.IsHitButNotSunk(location))
+                    return true;
+            return false;
+        }
         public bool Contains(Location location)
         {
             foreach (Ship ship in Ships)
