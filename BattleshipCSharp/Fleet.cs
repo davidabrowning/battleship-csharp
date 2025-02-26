@@ -11,6 +11,7 @@ namespace BattleshipCSharp
     {
         public List<Ship> Ships { get; private set; }
         public int Size { get { return Ships.Count; } }
+        public Ship LongestUnsunkShip { get { return GetLongestUnsunkShip();  } }
         public Fleet()
         {
             Ships = new List<Ship>();
@@ -40,12 +41,30 @@ namespace BattleshipCSharp
                     return true;
             return false;
         }
+        public bool IsHitButNotSunk(Location location)
+        {
+            foreach (Ship ship in Ships)
+                if (ship.IsHitButNotSunk(location))
+                    return true;
+            return false;
+        }
         public bool Contains(Location location)
         {
             foreach (Ship ship in Ships)
                 if (ship.Contains(location))
                     return true;
             return false;
+        }
+        public Ship GetLongestUnsunkShip()
+        {
+            if (IsSunk())
+                throw new Exception("No unsunk ships.");
+
+            Ship longestUnsunkShip = null;
+            foreach(Ship ship in Ships)
+                if (longestUnsunkShip == null || longestUnsunkShip.Length < ship.Length)
+                    longestUnsunkShip = ship;
+            return longestUnsunkShip;
         }
         public void ProcessHit(Location location)
         {

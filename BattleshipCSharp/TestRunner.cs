@@ -229,6 +229,14 @@ namespace BattleshipCSharp
             fleet.Add(new Ship("Submarine", ShipLength.Submarine));
             fleet.PlaceRandomly(board);
             TestHelper.AssertNotEquals(title, 0, fleet.Ships[0].Locations.Count);
+
+            title = "Longest unsunk ship is initially of length 5 (carrier)";
+            board = new Board();
+            fleet = new Fleet();
+            fleet.Add(new Ship("Destroyer", ShipLength.Destroyer));
+            fleet.Add(new Ship("Carrier", ShipLength.Carrier));
+            fleet.PlaceRandomly(board);
+            TestHelper.AssertEquals(title, (int)ShipLength.Carrier, fleet.LongestUnsunkShip.Length);
         }
 
         private void RunBoardTests()
@@ -300,6 +308,43 @@ namespace BattleshipCSharp
             string title;
             ComputerPlayer computerPlayer;
             Board board;
+            Ship ship;
+            Location location;
+            List<Location> locations;
+            int rating1;
+            int rating2;
+
+            title = "CPU thinks (1, 0) is more attractive than (0, 0) at game start";
+            computerPlayer = new ComputerPlayer();
+            board = new Board();
+            rating1 = computerPlayer.CalculateRating(board, new Location(1, 0));
+            rating2 = computerPlayer.CalculateRating(board, new Location(0, 0));
+            TestHelper.AssertTrue(title, rating1 > rating2);
+
+            title = "CPU thinks (2, 2) is more attractive than (1, 0) at game start";
+            computerPlayer = new ComputerPlayer();
+            board = new Board();
+            rating1 = computerPlayer.CalculateRating(board, new Location(2, 2));
+            rating2 = computerPlayer.CalculateRating(board, new Location(1, 0));
+            TestHelper.AssertTrue(title, rating1 > rating2);
+
+            title = "After a hit, CPU prefers max 4 top tiles for its next shot";
+            computerPlayer = new ComputerPlayer();
+            board = new Board();
+            ship = board.Fleet.Ships[0];
+            location = ship.Locations[2];
+            ship.ProcessHit(location);
+            locations = computerPlayer.CalculateTopLocations(board);
+            TestHelper.AssertTrue(title, locations.Count <= 4);
+
+            title = "After a hit, CPU prefers an adjacent tile for its next shot";
+            computerPlayer = new ComputerPlayer();
+            board = new Board();
+            ship = board.Fleet.Ships[0];
+            location = ship.Locations[2];
+            ship.ProcessHit(location);
+            locations = computerPlayer.CalculateTopLocations(board);
+            TestHelper.AssertTrue(title, locations.Contains(ship.Locations[1]));
         }
     }
 }

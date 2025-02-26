@@ -27,14 +27,11 @@ namespace BattleshipCSharp
                     QuitGame();
                 try
                 {
-                    string row = userInput.Substring(0, 1);
-                    string col = userInput.Substring(1);
-                    int y = (int)Convert.ToChar(row) - 65;
-                    int x = int.Parse(col);
-                    Location shotLocation = new Location(x, y);
+                    Location shotLocation = Location.ConvertToLocation(userInput);
                     if (OpponentBoard.ValidAttemptLocation(shotLocation))
-                        return new Location(x, y);
-                    ChatPrinter.PrintWarning("Invalid coordinates.");
+                        return shotLocation;
+                    else
+                        ChatPrinter.PrintWarning("Invalid coordinates.");
                 }
                 catch (Exception ex)
                 {

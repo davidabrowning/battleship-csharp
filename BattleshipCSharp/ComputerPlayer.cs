@@ -34,14 +34,74 @@ namespace BattleshipCSharp
         private Location GetNextMove()
         {
             Random rand = new Random();
-            int x;
-            int y;
-            do
+            List<Location> topLocations = CalculateTopLocations(OpponentBoard);
+            Location location = topLocations[rand.Next(0, topLocations.Count)];
+            return location;
+        }
+
+        public int CalculateRating(Board board, Location location)
+        {
+            int rating = 0;
+
+            // Bonuses for adjacent hit tiles
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos + 1, location.YPos)))
+                rating += 10000;
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos - 1, location.YPos)))
+                rating += 10000;
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos, location.YPos + 1)))
+                rating += 10000;
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos, location.YPos - 1)))
+                rating += 10000;
+
+            // Bonuses for two-in-a-row adjacent hit tiles
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos + 2, location.YPos)))
+                rating += 100;
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos - 2, location.YPos)))
+                rating += 100;
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos, location.YPos + 2)))
+                rating += 100;
+            if (board.Fleet.IsHitButNotSunk(new Location(location.XPos, location.YPos - 2)))
+                rating += 100;
+
+            for (int i = 0; i < board.Fleet.LongestUnsunkShip.Length; i++)
             {
-                x = rand.Next(Board.XMin, Board.XMax + 1);
-                y = rand.Next(Board.YMin, Board.YMax + 1);
-            } while (OpponentBoard.ShotsSustained.Contains(new Location(x, y)));
-            return new Location(x, y);
+                // Bonuses for adjacent empty tiles
+                if (board.ValidAttemptLocation(new Location(location.XPos + i, location.YPos)))
+                    rating++;
+                if (board.ValidAttemptLocation(new Location(location.XPos - i, location.YPos)))
+                    rating++;
+                if (board.ValidAttemptLocation(new Location(location.XPos, location.YPos + i)))
+                    rating++;
+                if (board.ValidAttemptLocation(new Location(location.XPos, location.YPos - i)))
+                    rating++;
+            }
+
+            // Penalty if this location is invalid
+            if (!board.ValidAttemptLocation(location))
+                rating = -100;
+
+            return rating;
+        }
+
+        public List<Location> CalculateTopLocations(Board board)
+        {
+            List<Location> topLocations = new List<Location>();
+            for (int x = Board.XMin; x <= Board.XMax; x++)
+            {
+                for (int y = Board.YMin; y <= Board.YMax; y++)
+                {
+                    Location location = new Location(x, y);
+                    if (topLocations.Count == 0)
+                        topLocations.Add(location);
+                    else if (CalculateRating(board, location) == CalculateRating(board, topLocations.First()))
+                        topLocations.Add(location);
+                    else if (CalculateRating(board, location) > CalculateRating(board, topLocations.First())) {
+                        topLocations.Clear();
+                        topLocations.Add(location);
+                    }
+                }
+            }
+            return topLocations;
         }
     }
 }
