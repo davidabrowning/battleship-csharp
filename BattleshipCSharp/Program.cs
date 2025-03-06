@@ -4,8 +4,8 @@
     {
         public static void Main(string[] args)
         {
-            //RunProgram();
-            RunTests();
+            RunProgram();
+            //RunTests();
         }
 
         private static void RunProgram()
